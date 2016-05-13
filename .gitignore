@@ -1,0 +1,12 @@
+# Maven
+target/
+dependency-reduced-pom.xml
+pom.xml.releaseBackup
+release.properties
+
+# IntelliJ IDEA
+out/
+.idea/
+*.iml
+*.iws
+*.ipr
