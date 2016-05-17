@@ -374,6 +374,7 @@
                         <artifactId>maven-pmd-plugin</artifactId>
                         <configuration>
                             <failOnViolation>false</failOnViolation>
+                            <linkXRef>false</linkXRef>
                         </configuration>
                         <executions>
                             <execution>
