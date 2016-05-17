@@ -8,7 +8,9 @@ addons:
     packages:
       - rpm
 before_deploy:
-  - rm -f target/original-*.jar
+  - find . -type f -name 'original-*.jar' -delete
+  - mvn jdeb:jdeb
+  - mvn rpm:rpm
 deploy:
   provider: releases
   api_key:
