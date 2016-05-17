@@ -76,7 +76,8 @@ public class MetricsConsoleReporterConfiguration implements PluginConfigBean {
     }
 
     public PrintStream getOutputStream() {
-        switch (Strings.nullToEmpty(outputStream).toLowerCase(Locale.ENGLISH)) {
+        final String streamName = Strings.nullToEmpty(outputStream).toLowerCase(Locale.ENGLISH);
+        switch (streamName) {
             case "stderr":
             case "err":
                 return System.err;
