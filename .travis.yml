@@ -22,7 +22,7 @@ deploy:
   file:
     - "**/target/*.jar"
     - "**/target/*.deb"
-    - "**/target/*.rpm"
+    - "**/target/**/*.rpm"
   skip_cleanup: true
   on:
     repo: Graylog2/graylog-plugin-metrics-reporter
