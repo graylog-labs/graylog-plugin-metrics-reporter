@@ -3,6 +3,7 @@
 
 A collection of plugins for reporting internal Graylog metrics to other systems.
 
+* [metrics-reporter-cassandra](metrics-reporter-cassandra/README.md)
 * [metrics-reporter-console](metrics-reporter-console/README.md)
 * [metrics-reporter-csv](metrics-reporter-csv/README.md)
 * [metrics-reporter-datadog](metrics-reporter-datadog/README.md)

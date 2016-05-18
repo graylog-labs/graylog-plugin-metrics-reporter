@@ -12,6 +12,7 @@
         <module>metrics-reporter-slf4j</module>
         <module>metrics-reporter-ganglia</module>
         <module>metrics-reporter-graphite</module>
+        <module>metrics-reporter-cassandra</module>
         <module>metrics-reporter-datadog</module>
         <module>metrics-reporter-influxdb</module>
         <module>metrics-reporter-librato</module>
