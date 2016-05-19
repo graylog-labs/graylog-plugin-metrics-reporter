@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.graylog.plugins</groupId>
         <artifactId>metrics-reporter-parent</artifactId>
-        <version>1.1.0</version>
+        <version>1.1.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>metrics-reporter-influxdb</artifactId>
