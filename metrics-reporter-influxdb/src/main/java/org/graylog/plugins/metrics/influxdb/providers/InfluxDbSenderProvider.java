@@ -20,11 +20,14 @@ import com.google.common.base.Throwables;
 import com.google.common.primitives.Ints;
 import com.izettle.metrics.influxdb.InfluxDbHttpSender;
 import com.izettle.metrics.influxdb.InfluxDbSender;
+import com.izettle.metrics.influxdb.InfluxDbTcpSender;
+import com.izettle.metrics.influxdb.InfluxDbUdpSender;
 import org.graylog.plugins.metrics.influxdb.MetricsInfluxDbReporterConfiguration;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 import java.net.URI;
+import java.util.Locale;
 
 import static java.util.Objects.requireNonNull;
 
@@ -40,15 +43,37 @@ public class InfluxDbSenderProvider implements Provider<InfluxDbSender> {
     public InfluxDbSender get() {
         try {
             final URI uri = configuration.getUri().parseServerAuthority();
-            return new InfluxDbHttpSender(
-                    uri.getScheme(),
-                    uri.getHost(),
-                    uri.getPort(),
-                    uri.getQuery(),
-                    uri.getUserInfo(),
-                    configuration.getTimePrecision(),
-                    Ints.saturatedCast(configuration.getConnectTimeout().toMilliseconds()),
-                    Ints.saturatedCast(configuration.getReadTimeout().toMilliseconds()));
+            final String protocol = uri.getScheme().toLowerCase(Locale.ENGLISH);
+
+            switch (protocol) {
+                case "http":
+                case "https":
+                    return new InfluxDbHttpSender(
+                            protocol,
+                            uri.getHost(),
+                            uri.getPort(),
+                            uri.getPath(),
+                            uri.getUserInfo(),
+                            configuration.getTimePrecision(),
+                            Ints.saturatedCast(configuration.getConnectTimeout().toMilliseconds()),
+                            Ints.saturatedCast(configuration.getReadTimeout().toMilliseconds()));
+                case "tcp":
+                    return new InfluxDbTcpSender(
+                            uri.getHost(),
+                            uri.getPort(),
+                            Ints.saturatedCast(configuration.getSocketTimeout().toMilliseconds()),
+                            uri.getPath(),
+                            configuration.getTimePrecision());
+                case "udp":
+                    return new InfluxDbUdpSender(
+                            uri.getHost(),
+                            uri.getPort(),
+                            Ints.saturatedCast(configuration.getSocketTimeout().toMilliseconds()),
+                            uri.getPath(),
+                            configuration.getTimePrecision());
+                default:
+                    throw new IllegalArgumentException("Unsupported protocol \"" + protocol + "\"");
+            }
         } catch (Exception e) {
             throw Throwables.propagate(e);
         }

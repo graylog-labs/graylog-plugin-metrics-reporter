@@ -17,12 +17,15 @@
 package org.graylog.plugins.metrics.influxdb;
 
 import com.github.joschi.jadconfig.Parameter;
+import com.github.joschi.jadconfig.ValidationException;
+import com.github.joschi.jadconfig.ValidatorMethod;
 import com.github.joschi.jadconfig.util.Duration;
 import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
 import org.graylog.plugins.metrics.influxdb.jadconfig.StringMapConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -53,6 +56,9 @@ public class MetricsInfluxDbReporterConfiguration implements PluginConfigBean {
 
     @Parameter(value = PREFIX + "read_timeout", validator = PositiveDurationValidator.class)
     private Duration readTimeout = Duration.seconds(5L);
+
+    @Parameter(value = PREFIX + "socket_timeout", validator = PositiveDurationValidator.class)
+    private Duration socketTimeout = Duration.seconds(5L);
 
     @Parameter(value = PREFIX + "tags", required = true, converter = StringMapConverter.class)
     private Map<String, String> tags = Collections.emptyMap();
@@ -105,5 +111,20 @@ public class MetricsInfluxDbReporterConfiguration implements PluginConfigBean {
 
     public boolean isSkipIdleMetrics() {
         return skipIdleMetrics;
+    }
+
+    public Duration getSocketTimeout() {
+        return socketTimeout;
+    }
+
+    @ValidatorMethod
+    @SuppressWarnings("unused")
+    public void validate() throws ValidationException {
+        if (uri != null) {
+            final String scheme = uri.getScheme();
+            if (!Arrays.asList("http", "https", "tcp", "udp").contains(scheme)) {
+                throw new ValidationException("Unsupported protocol \"" + scheme + "\".");
+            }
+        }
     }
 }
