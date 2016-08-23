@@ -18,7 +18,7 @@
     <description>Plugin for reporting internal Graylog metrics to Prometheus.</description>
 
     <properties>
-        <simpleclient.version>0.0.14</simpleclient.version>
+        <simpleclient.version>0.0.16</simpleclient.version>
     </properties>
 
     <dependencies>
