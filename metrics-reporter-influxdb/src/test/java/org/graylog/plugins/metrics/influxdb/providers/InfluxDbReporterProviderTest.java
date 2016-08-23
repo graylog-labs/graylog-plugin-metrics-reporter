@@ -31,7 +31,7 @@ public class InfluxDbReporterProviderTest {
     @Test
     public void get() throws Exception {
         final MetricsInfluxDbReporterConfiguration configuration = new MetricsInfluxDbReporterConfiguration();
-        final InfluxDbSender influxDbSender = new InfluxDbHttpSender("http", "localhost", 1234, "database", null, TimeUnit.SECONDS, 5000, 5000);
+        final InfluxDbSender influxDbSender = new InfluxDbHttpSender("http", "localhost", 1234, "database", null, TimeUnit.SECONDS, 5000, 5000, "");
         final InfluxDbReporterProvider provider = new InfluxDbReporterProvider(configuration, influxDbSender, new MetricRegistry());
         final InfluxDbReporter reporter = provider.get();
         assertNotNull(reporter);

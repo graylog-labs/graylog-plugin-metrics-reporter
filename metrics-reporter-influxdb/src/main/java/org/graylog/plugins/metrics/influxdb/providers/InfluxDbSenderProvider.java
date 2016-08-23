@@ -56,21 +56,24 @@ public class InfluxDbSenderProvider implements Provider<InfluxDbSender> {
                             uri.getUserInfo(),
                             configuration.getTimePrecision(),
                             Ints.saturatedCast(configuration.getConnectTimeout().toMilliseconds()),
-                            Ints.saturatedCast(configuration.getReadTimeout().toMilliseconds()));
+                            Ints.saturatedCast(configuration.getReadTimeout().toMilliseconds()),
+                            "");
                 case "tcp":
                     return new InfluxDbTcpSender(
                             uri.getHost(),
                             uri.getPort(),
                             Ints.saturatedCast(configuration.getSocketTimeout().toMilliseconds()),
                             uri.getPath(),
-                            configuration.getTimePrecision());
+                            configuration.getTimePrecision(),
+                            "");
                 case "udp":
                     return new InfluxDbUdpSender(
                             uri.getHost(),
                             uri.getPort(),
                             Ints.saturatedCast(configuration.getSocketTimeout().toMilliseconds()),
                             uri.getPath(),
-                            configuration.getTimePrecision());
+                            configuration.getTimePrecision(),
+                            "");
                 default:
                     throw new IllegalArgumentException("Unsupported protocol \"" + protocol + "\"");
             }
