@@ -16,11 +16,11 @@
  */
 package org.graylog.plugins.metrics.elasticsearch.providers;
 
-import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
 import com.google.common.base.Throwables;
 import com.google.common.primitives.Ints;
 import org.elasticsearch.metrics.ElasticsearchReporter;
+import org.graylog.plugins.metrics.core.RegexMetricFilter;
 import org.graylog.plugins.metrics.elasticsearch.MetricsElasticsearchReporterConfiguration;
 
 import javax.inject.Inject;
@@ -56,7 +56,7 @@ public class ElasticsearchReporterProvider implements Provider<ElasticsearchRepo
                     .prefixedWith(configuration.getPrefix())
                     .convertDurationsTo(configuration.getUnitDurations())
                     .convertRatesTo(configuration.getUnitRates())
-                    .filter(MetricFilter.ALL)
+                    .filter(new RegexMetricFilter(configuration.getIncludeMetrics()))
                     .build();
         } catch (IOException e) {
             throw Throwables.propagate(e);

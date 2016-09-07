@@ -25,11 +25,13 @@ import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
 import com.github.joschi.jadconfig.validators.PositiveIntegerValidator;
 import com.github.joschi.jadconfig.validators.StringNotBlankValidator;
 import org.graylog.plugins.metrics.cassandra.jadconfig.ConsistencyLevelConverter;
+import org.graylog.plugins.metrics.core.jadconfig.PatternListConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class MetricsCassandraReporterConfiguration implements PluginConfigBean {
     private static final String PREFIX = "metrics_cassandra_";
@@ -47,7 +49,7 @@ public class MetricsCassandraReporterConfiguration implements PluginConfigBean {
     private TimeUnit unitDurations = TimeUnit.MILLISECONDS;
 
     @Parameter(value = PREFIX + "prefix")
-    private String prefix;
+    private String prefix = null;
 
     @Parameter(value = PREFIX + "addresses", required = true, converter = StringListConverter.class)
     private List<String> addresses = Collections.singletonList("127.0.0.1");
@@ -67,6 +69,8 @@ public class MetricsCassandraReporterConfiguration implements PluginConfigBean {
     @Parameter(value = PREFIX + "consistency", required = true, converter = ConsistencyLevelConverter.class)
     private ConsistencyLevel consistency = ConsistencyLevel.ONE;
 
+    @Parameter(value = PREFIX + "include_metrics", converter = PatternListConverter.class)
+    private List<Pattern> includeMetrics = Collections.singletonList(Pattern.compile(".*"));
 
     public boolean isEnabled() {
         return enabled;
@@ -110,5 +114,9 @@ public class MetricsCassandraReporterConfiguration implements PluginConfigBean {
 
     public String getConsistency() {
         return consistency.name();
+    }
+
+    public List<Pattern> getIncludeMetrics() {
+        return includeMetrics;
     }
 }

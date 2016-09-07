@@ -10,3 +10,4 @@
 | `metrics_csv_locale`          | System default | The locale to use for writing the CSV files.       |
 | `metrics_csv_unit_rates`      | `seconds`      | The time unit used for rates.                      |
 | `metrics_csv_unit_durations`  | `milliseconds` | The time unit used for durations.                  |
+| `metrics_csv_include_metrics` | `.*`           | A comma-separated list of metric names to report.  |

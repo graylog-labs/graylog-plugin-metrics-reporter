@@ -17,9 +17,9 @@
 package org.graylog.plugins.metrics.console.providers;
 
 import com.codahale.metrics.ConsoleReporter;
-import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
 import org.graylog.plugins.metrics.console.MetricsConsoleReporterConfiguration;
+import org.graylog.plugins.metrics.core.RegexMetricFilter;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -44,7 +44,7 @@ public class ConsoleReporterProvider implements Provider<ConsoleReporter> {
                 .outputTo(configuration.getOutputStream())
                 .convertDurationsTo(configuration.getUnitDurations())
                 .convertRatesTo(configuration.getUnitRates())
-                .filter(MetricFilter.ALL)
+                .filter(new RegexMetricFilter(configuration.getIncludeMetrics()))
                 .build();
     }
 }

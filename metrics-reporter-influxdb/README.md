@@ -16,6 +16,7 @@
 | `metrics_influxdb_tags`              | [empty]        | Additional tags for InfluxDB in the format `key:value, key:value`.                            |
 | `metrics_influxdb_group_gauges`      | `false`        | Whether to group gauges.                                                                      |
 | `metrics_influxdb_skip_idle_metrics` | `true`         | Whether to skip idle metrics.                                                                 |
+| `metrics_influxdb_include_metrics`   | `.*`           | A comma-separated list of metric names to report.                                             |
 
 
 ## Supported Transports

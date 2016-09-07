@@ -16,10 +16,10 @@
  */
 package org.graylog.plugins.metrics.ganglia.providers;
 
-import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.ganglia.GangliaReporter;
 import info.ganglia.gmetric4j.gmetric.GMetric;
+import org.graylog.plugins.metrics.core.RegexMetricFilter;
 import org.graylog.plugins.metrics.ganglia.MetricsGangliaReporterConfiguration;
 
 import javax.inject.Inject;
@@ -49,7 +49,7 @@ public class GangliaReporterProvider implements Provider<GangliaReporter> {
                 .convertDurationsTo(configuration.getUnitDurations())
                 .withDMax(configuration.getDMax())
                 .withTMax(configuration.getTMax())
-                .filter(MetricFilter.ALL)
+                .filter(new RegexMetricFilter(configuration.getIncludeMetrics()))
                 .build(gMetric);
     }
 }

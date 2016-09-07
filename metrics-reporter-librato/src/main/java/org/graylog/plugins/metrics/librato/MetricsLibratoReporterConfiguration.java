@@ -20,8 +20,11 @@ import com.github.joschi.jadconfig.Parameter;
 import com.github.joschi.jadconfig.util.Duration;
 import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
 import com.github.joschi.jadconfig.validators.StringNotBlankValidator;
+import org.graylog.plugins.metrics.core.jadconfig.PatternListConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
@@ -53,7 +56,7 @@ public class MetricsLibratoReporterConfiguration implements PluginConfigBean {
     private String name = "Graylog";
 
     @Parameter(PREFIX + "prefix")
-    private String prefix;
+    private String prefix = null;
 
     @Parameter(PREFIX + "prefix_delimiter")
     private String prefixDelimiter = ".";
@@ -69,6 +72,9 @@ public class MetricsLibratoReporterConfiguration implements PluginConfigBean {
 
     @Parameter(value = PREFIX + "source_regex")
     private Pattern sourceRegex;
+
+    @Parameter(value = PREFIX + "include_metrics", converter = PatternListConverter.class)
+    private List<Pattern> includeMetrics = Collections.singletonList(Pattern.compile(".*"));
 
     public boolean isEnabled() {
         return enabled;
@@ -124,5 +130,9 @@ public class MetricsLibratoReporterConfiguration implements PluginConfigBean {
 
     public Pattern getSourceRegex() {
         return sourceRegex;
+    }
+
+    public List<Pattern> getIncludeMetrics() {
+        return includeMetrics;
     }
 }

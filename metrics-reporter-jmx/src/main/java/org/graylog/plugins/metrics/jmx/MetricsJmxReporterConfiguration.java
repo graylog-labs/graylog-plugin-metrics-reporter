@@ -17,9 +17,13 @@
 package org.graylog.plugins.metrics.jmx;
 
 import com.github.joschi.jadconfig.Parameter;
+import org.graylog.plugins.metrics.core.jadconfig.PatternListConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class MetricsJmxReporterConfiguration implements PluginConfigBean {
     private static final String PREFIX = "metrics_jmx_";
@@ -33,6 +37,9 @@ public class MetricsJmxReporterConfiguration implements PluginConfigBean {
     @Parameter(value = PREFIX + "unit_durations", required = true)
     private TimeUnit unitDurations = TimeUnit.MILLISECONDS;
 
+    @Parameter(value = PREFIX + "include_metrics", converter = PatternListConverter.class)
+    private List<Pattern> includeMetrics = Collections.singletonList(Pattern.compile(".*"));
+
     public boolean isEnabled() {
         return enabled;
     }
@@ -43,5 +50,9 @@ public class MetricsJmxReporterConfiguration implements PluginConfigBean {
 
     public TimeUnit getUnitDurations() {
         return unitDurations;
+    }
+
+    public List<Pattern> getIncludeMetrics() {
+        return includeMetrics;
     }
 }

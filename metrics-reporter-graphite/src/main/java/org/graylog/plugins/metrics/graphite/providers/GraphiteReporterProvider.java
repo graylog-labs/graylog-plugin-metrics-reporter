@@ -16,10 +16,10 @@
  */
 package org.graylog.plugins.metrics.graphite.providers;
 
-import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.graphite.GraphiteReporter;
 import com.codahale.metrics.graphite.GraphiteSender;
+import org.graylog.plugins.metrics.core.RegexMetricFilter;
 import org.graylog.plugins.metrics.graphite.MetricsGraphiteReporterConfiguration;
 
 import javax.inject.Inject;
@@ -47,7 +47,7 @@ public class GraphiteReporterProvider implements Provider<GraphiteReporter> {
                 .prefixedWith(configuration.getPrefix())
                 .convertRatesTo(configuration.getUnitRates())
                 .convertDurationsTo(configuration.getUnitDurations())
-                .filter(MetricFilter.ALL)
+                .filter(new RegexMetricFilter(configuration.getIncludeMetrics()))
                 .build(graphiteSender);
     }
 }

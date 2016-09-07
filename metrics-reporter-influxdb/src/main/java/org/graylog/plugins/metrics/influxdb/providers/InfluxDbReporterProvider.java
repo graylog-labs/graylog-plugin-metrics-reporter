@@ -16,10 +16,10 @@
  */
 package org.graylog.plugins.metrics.influxdb.providers;
 
-import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
 import com.izettle.metrics.influxdb.InfluxDbReporter;
 import com.izettle.metrics.influxdb.InfluxDbSender;
+import org.graylog.plugins.metrics.core.RegexMetricFilter;
 import org.graylog.plugins.metrics.influxdb.MetricsInfluxDbReporterConfiguration;
 
 import javax.inject.Inject;
@@ -49,7 +49,7 @@ public class InfluxDbReporterProvider implements Provider<InfluxDbReporter> {
                 .skipIdleMetrics(configuration.isSkipIdleMetrics())
                 .convertDurationsTo(configuration.getUnitDurations())
                 .convertRatesTo(configuration.getUnitRates())
-                .filter(MetricFilter.ALL)
+                .filter(new RegexMetricFilter(configuration.getIncludeMetrics()))
                 .build(influxDbSender);
     }
 }

@@ -17,3 +17,4 @@
 | `metrics_ganglia_prefix`          | [empty]                    | The prefix used for all metrics.                                                  |
 | `metrics_ganglia_unit_rates`      | `seconds`                  | The time unit used for rates.                                                     |
 | `metrics_ganglia_unit_durations`  | `milliseconds`             | The time unit used for durations.                                                 |
+| `metrics_ganglia_include_metrics` | `.*`                       | A comma-separated list of metric names to report.                                 |

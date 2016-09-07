@@ -15,5 +15,6 @@
 | `metrics_cassandra_table`           | `metrics`      | The Cassandra table to write metrics into.                  |
 | `metrics_cassandra_ttl`             | `60`           | The time-to-live for the Cassandra connection.              |
 | `metrics_cassandra_consistency`     | `ONE`          | The [consistency level][1] used to write metrics.           |
+| `metrics_cassandra_include_metrics` | `.*`           | A comma-separated list of metric names to report.           |
 
 [1]: https://docs.datastax.com/en/cassandra/3.x/cassandra/dml/dmlConfigConsistency.html

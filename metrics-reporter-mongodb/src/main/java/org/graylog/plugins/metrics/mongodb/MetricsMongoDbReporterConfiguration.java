@@ -21,12 +21,15 @@ import com.github.joschi.jadconfig.util.Duration;
 import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
 import com.google.common.collect.ImmutableMap;
 import com.mongodb.MongoClientURI;
+import org.graylog.plugins.metrics.core.jadconfig.PatternListConverter;
 import org.graylog.plugins.metrics.core.jadconfig.StringMapConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class MetricsMongoDbReporterConfiguration implements PluginConfigBean {
     private static final String PREFIX = "metrics_mongodb_";
@@ -48,6 +51,9 @@ public class MetricsMongoDbReporterConfiguration implements PluginConfigBean {
 
     @Parameter(value = PREFIX + "additionalFields", required = true, converter = StringMapConverter.class)
     private Map<String, String> additionalFields = Collections.emptyMap();
+
+    @Parameter(value = PREFIX + "include_metrics", converter = PatternListConverter.class)
+    private List<Pattern> includeMetrics = Collections.singletonList(Pattern.compile(".*"));
 
     public boolean isEnabled() {
         return enabled;
@@ -71,5 +77,9 @@ public class MetricsMongoDbReporterConfiguration implements PluginConfigBean {
 
     public Map<String, Object> getAdditionalFields() {
         return ImmutableMap.copyOf(additionalFields);
+    }
+
+    public List<Pattern> getIncludeMetrics() {
+        return includeMetrics;
     }
 }

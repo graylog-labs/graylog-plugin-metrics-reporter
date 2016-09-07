@@ -16,13 +16,13 @@
  */
 package org.graylog.plugins.metrics.mongodb.providers;
 
-import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
 import com.google.common.net.HostAndPort;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import io.github.aparnachaudhary.metrics.MongoDBReporter;
+import org.graylog.plugins.metrics.core.RegexMetricFilter;
 import org.graylog.plugins.metrics.mongodb.MetricsMongoDbReporterConfiguration;
 
 import javax.inject.Inject;
@@ -55,7 +55,7 @@ public class MongoDBReporterProvider implements Provider<MongoDBReporter> {
                 .additionalFields(configuration.getAdditionalFields())
                 .convertDurationsTo(configuration.getUnitDurations())
                 .convertRatesTo(configuration.getUnitRates())
-                .filter(MetricFilter.ALL)
+                .filter(new RegexMetricFilter(configuration.getIncludeMetrics()))
                 .build();
     }
 

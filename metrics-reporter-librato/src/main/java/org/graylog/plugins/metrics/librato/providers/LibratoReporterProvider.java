@@ -16,10 +16,10 @@
  */
 package org.graylog.plugins.metrics.librato.providers;
 
-import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
 import com.github.joschi.jadconfig.util.Duration;
 import com.librato.metrics.LibratoReporter;
+import org.graylog.plugins.metrics.core.RegexMetricFilter;
 import org.graylog.plugins.metrics.librato.MetricsLibratoReporterConfiguration;
 
 import javax.inject.Inject;
@@ -50,7 +50,7 @@ public class LibratoReporterProvider implements Provider<LibratoReporter> {
                 .setDurationUnit(configuration.getUnitDurations())
                 .setRateUnit(configuration.getUnitRates())
                 .setSourceRegex(configuration.getSourceRegex())
-                .setFilter(MetricFilter.ALL)
+                .setFilter(new RegexMetricFilter(configuration.getIncludeMetrics()))
                 .build();
     }
 }

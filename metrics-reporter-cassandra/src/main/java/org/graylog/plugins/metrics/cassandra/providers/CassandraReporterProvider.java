@@ -16,11 +16,11 @@
  */
 package org.graylog.plugins.metrics.cassandra.providers;
 
-import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.cassandra.Cassandra;
 import com.codahale.metrics.cassandra.CassandraReporter;
 import org.graylog.plugins.metrics.cassandra.MetricsCassandraReporterConfiguration;
+import org.graylog.plugins.metrics.core.RegexMetricFilter;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -47,7 +47,7 @@ public class CassandraReporterProvider implements Provider<CassandraReporter> {
                 .prefixedWith(configuration.getPrefix())
                 .convertDurationsTo(configuration.getUnitDurations())
                 .convertRatesTo(configuration.getUnitRates())
-                .filter(MetricFilter.ALL)
+                .filter(new RegexMetricFilter(configuration.getIncludeMetrics()))
                 .build(cassandra);
     }
 }

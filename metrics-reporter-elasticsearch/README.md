@@ -16,3 +16,4 @@
 | `metrics_elasticsearch_prefix`              | [empty]          | The prefix used for all metrics.                                                                          |
 | `metrics_elasticsearch_unit_rates`          | `seconds`        | The time unit used for rates.                                                                             |
 | `metrics_elasticsearch_unit_durations`      | `milliseconds`   | The time unit used for durations.                                                                         |
+| `metrics_elasticsearch_include_metrics`     | `.*`             | A comma-separated list of metric names to report.                                                         |

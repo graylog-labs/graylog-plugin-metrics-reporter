@@ -18,8 +18,8 @@ package org.graylog.plugins.metrics.statsd.providers;
 
 import com.basistech.metrics.reporting.Statsd;
 import com.basistech.metrics.reporting.StatsdReporter;
-import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
+import org.graylog.plugins.metrics.core.RegexMetricFilter;
 import org.graylog.plugins.metrics.statsd.MetricsStatsdReporterConfiguration;
 
 import javax.inject.Inject;
@@ -45,7 +45,7 @@ public class StatsdReporterProvider implements Provider<StatsdReporter> {
                 .prefixedWith(configuration.getPrefix())
                 .convertDurationsTo(configuration.getUnitDurations())
                 .convertRatesTo(configuration.getUnitRates())
-                .filter(MetricFilter.ALL)
+                .filter(new RegexMetricFilter(configuration.getIncludeMetrics()))
                 .build(statsd);
     }
 }

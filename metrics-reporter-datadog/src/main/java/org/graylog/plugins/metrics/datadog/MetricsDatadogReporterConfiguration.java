@@ -20,10 +20,14 @@ import com.github.joschi.jadconfig.Parameter;
 import com.github.joschi.jadconfig.util.Duration;
 import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
 import com.google.common.net.HostAndPort;
+import org.graylog.plugins.metrics.core.jadconfig.PatternListConverter;
 import org.graylog.plugins.metrics.datadog.converters.DatadogTransportConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class MetricsDatadogReporterConfiguration implements PluginConfigBean {
     private static final String PREFIX = "metrics_datadog_";
@@ -69,6 +73,9 @@ public class MetricsDatadogReporterConfiguration implements PluginConfigBean {
 
     @Parameter(PREFIX + "detect_ec2_hostname")
     private boolean ec2Instance = false;
+
+    @Parameter(value = PREFIX + "include_metrics", converter = PatternListConverter.class)
+    private List<Pattern> includeMetrics = Collections.singletonList(Pattern.compile(".*"));
 
     public boolean isEnabled() {
         return enabled;
@@ -124,5 +131,9 @@ public class MetricsDatadogReporterConfiguration implements PluginConfigBean {
 
     public boolean isEC2Instance() {
         return ec2Instance;
+    }
+
+    public List<Pattern> getIncludeMetrics() {
+        return includeMetrics;
     }
 }

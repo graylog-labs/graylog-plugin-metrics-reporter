@@ -23,6 +23,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.graylog.plugins</groupId>
+            <artifactId>metrics-reporter-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>io.prometheus</groupId>
             <artifactId>simpleclient</artifactId>
             <version>${simpleclient.version}</version>

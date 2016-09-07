@@ -20,13 +20,17 @@ import com.github.joschi.jadconfig.Parameter;
 import com.github.joschi.jadconfig.util.Duration;
 import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
 import com.github.joschi.jadconfig.validators.PositiveIntegerValidator;
+import org.graylog.plugins.metrics.core.jadconfig.PatternListConverter;
 import org.graylog.plugins.metrics.graphite.converters.GraphiteProtocolConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class MetricsGraphiteReporterConfiguration implements PluginConfigBean {
     private static final String PREFIX = "metrics_graphite_";
@@ -50,13 +54,16 @@ public class MetricsGraphiteReporterConfiguration implements PluginConfigBean {
     private Duration reportInterval = Duration.seconds(15L);
 
     @Parameter(PREFIX + "prefix")
-    private String prefix;
+    private String prefix = null;
 
     @Parameter(value = PREFIX + "unit_rates", required = true)
     private TimeUnit unitRates = TimeUnit.SECONDS;
 
     @Parameter(value = PREFIX + "unit_durations", required = true)
     private TimeUnit unitDurations = TimeUnit.MILLISECONDS;
+
+    @Parameter(value = PREFIX + "include_metrics", converter = PatternListConverter.class)
+    private List<Pattern> includeMetrics = Collections.singletonList(Pattern.compile(".*"));
 
     public boolean isEnabled() {
         return enabled;
@@ -92,5 +99,9 @@ public class MetricsGraphiteReporterConfiguration implements PluginConfigBean {
 
     public TimeUnit getUnitDurations() {
         return unitDurations;
+    }
+
+    public List<Pattern> getIncludeMetrics() {
+        return includeMetrics;
     }
 }

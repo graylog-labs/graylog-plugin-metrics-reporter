@@ -16,9 +16,9 @@
  */
 package org.graylog.plugins.metrics.slf4j.providers;
 
-import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Slf4jReporter;
+import org.graylog.plugins.metrics.core.RegexMetricFilter;
 import org.graylog.plugins.metrics.slf4j.MetricsSlf4jReporterConfiguration;
 
 import javax.inject.Inject;
@@ -44,7 +44,7 @@ public class Slf4jReporterProvider implements Provider<Slf4jReporter> {
                 .withLoggingLevel(configuration.getLevel())
                 .convertDurationsTo(configuration.getUnitDurations())
                 .convertRatesTo(configuration.getUnitRates())
-                .filter(MetricFilter.ALL)
+                .filter(new RegexMetricFilter(configuration.getIncludeMetrics()))
                 .build();
     }
 }

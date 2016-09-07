@@ -11,3 +11,4 @@
 | `metrics_console_timezone`        | System default | Which time zone to use for printing the metrics.                 |
 | `metrics_console_unit_rates`      | `seconds`      | The time unit used for rates.                                    |
 | `metrics_console_unit_durations`  | `milliseconds` | The time unit used for durations.                                |
+| `metrics_console_include_metrics` | `.*`           | A comma-separated list of metric names to report.                |

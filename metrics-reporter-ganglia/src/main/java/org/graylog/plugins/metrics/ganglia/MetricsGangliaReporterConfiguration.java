@@ -22,11 +22,15 @@ import com.github.joschi.jadconfig.validators.InetPortValidator;
 import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
 import com.github.joschi.jadconfig.validators.PositiveIntegerValidator;
 import info.ganglia.gmetric4j.gmetric.GMetric;
+import org.graylog.plugins.metrics.core.jadconfig.PatternListConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class MetricsGangliaReporterConfiguration implements PluginConfigBean {
     private static final String PREFIX = "metrics_ganglia_";
@@ -62,13 +66,16 @@ public class MetricsGangliaReporterConfiguration implements PluginConfigBean {
     private Duration reportInterval = Duration.seconds(15L);
 
     @Parameter(PREFIX + "prefix")
-    private String prefix;
+    private String prefix = null;
 
     @Parameter(value = PREFIX + "unit_rates", required = true)
     private TimeUnit unitRates = TimeUnit.SECONDS;
 
     @Parameter(value = PREFIX + "unit_durations", required = true)
     private TimeUnit unitDurations = TimeUnit.MILLISECONDS;
+
+    @Parameter(value = PREFIX + "include_metrics", converter = PatternListConverter.class)
+    private List<Pattern> includeMetrics = Collections.singletonList(Pattern.compile(".*"));
 
     public boolean isEnabled() {
         return enabled;
@@ -128,5 +135,9 @@ public class MetricsGangliaReporterConfiguration implements PluginConfigBean {
 
     public int getTMax() {
         return tMax;
+    }
+
+    public List<Pattern> getIncludeMetrics() {
+        return includeMetrics;
     }
 }

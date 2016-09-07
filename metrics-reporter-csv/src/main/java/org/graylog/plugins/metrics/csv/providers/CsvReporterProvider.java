@@ -17,8 +17,8 @@
 package org.graylog.plugins.metrics.csv.providers;
 
 import com.codahale.metrics.CsvReporter;
-import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
+import org.graylog.plugins.metrics.core.RegexMetricFilter;
 import org.graylog.plugins.metrics.csv.MetricsCsvReporterConfiguration;
 
 import javax.inject.Inject;
@@ -42,7 +42,7 @@ public class CsvReporterProvider implements Provider<CsvReporter> {
                 .formatFor(configuration.getLocale())
                 .convertDurationsTo(configuration.getUnitDurations())
                 .convertRatesTo(configuration.getUnitRates())
-                .filter(MetricFilter.ALL)
+                .filter(new RegexMetricFilter(configuration.getIncludeMetrics()))
                 .build(configuration.getDirectory());
     }
 }
