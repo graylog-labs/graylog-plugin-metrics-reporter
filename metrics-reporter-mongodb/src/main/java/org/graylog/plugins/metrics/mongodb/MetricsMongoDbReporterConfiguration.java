@@ -21,7 +21,7 @@ import com.github.joschi.jadconfig.util.Duration;
 import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
 import com.google.common.collect.ImmutableMap;
 import com.mongodb.MongoClientURI;
-import org.graylog.plugins.metrics.mongodb.jadconfig.StringMapConverter;
+import org.graylog.plugins.metrics.core.jadconfig.StringMapConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
 import java.util.Collections;

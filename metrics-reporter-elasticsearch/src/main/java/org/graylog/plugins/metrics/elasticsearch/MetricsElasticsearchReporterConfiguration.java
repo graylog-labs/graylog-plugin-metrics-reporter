@@ -23,7 +23,7 @@ import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
 import com.github.joschi.jadconfig.validators.PositiveIntegerValidator;
 import com.github.joschi.jadconfig.validators.StringNotBlankValidator;
 import com.google.common.collect.ImmutableMap;
-import org.graylog.plugins.metrics.elasticsearch.jadconfig.StringMapConverter;
+import org.graylog.plugins.metrics.core.jadconfig.StringMapConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
 import java.util.Collections;

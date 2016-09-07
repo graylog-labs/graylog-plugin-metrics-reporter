@@ -6,6 +6,7 @@
     </prerequisites>
 
     <modules>
+        <module>metrics-reporter-core</module>
         <module>metrics-reporter-console</module>
         <module>metrics-reporter-csv</module>
         <module>metrics-reporter-jmx</module>
