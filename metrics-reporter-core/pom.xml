@@ -18,5 +18,14 @@
     <description>Shared core classes for Graylog metrics reporter plugins.</description>
 
     <build>
+        <plugins>
+            <plugin>
+                <artifactId>jdeb</artifactId>
+                <groupId>org.vafer</groupId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>
