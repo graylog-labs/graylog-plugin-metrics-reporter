@@ -20,11 +20,15 @@ import com.github.joschi.jadconfig.Parameter;
 import com.github.joschi.jadconfig.util.Duration;
 import com.github.joschi.jadconfig.validators.DirectoryWritableValidator;
 import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
+import org.graylog.plugins.metrics.core.jadconfig.PatternListConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class MetricsCsvReporterConfiguration implements PluginConfigBean {
     private static final String PREFIX = "metrics_csv_";
@@ -46,6 +50,9 @@ public class MetricsCsvReporterConfiguration implements PluginConfigBean {
 
     @Parameter(value = PREFIX + "unit_durations", required = true)
     private TimeUnit unitDurations = TimeUnit.MILLISECONDS;
+
+    @Parameter(value = PREFIX + "include_metrics", converter = PatternListConverter.class)
+    private List<Pattern> includeMetrics = Collections.singletonList(Pattern.compile(".*"));
 
     public boolean isEnabled() {
         return enabled;
@@ -69,5 +76,9 @@ public class MetricsCsvReporterConfiguration implements PluginConfigBean {
 
     public File getDirectory() {
         return directory;
+    }
+
+    public List<Pattern> getIncludeMetrics() {
+        return includeMetrics;
     }
 }

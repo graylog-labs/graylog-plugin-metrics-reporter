@@ -20,6 +20,7 @@ import com.github.joschi.jadconfig.Parameter;
 import com.github.joschi.jadconfig.util.Duration;
 import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
 import com.google.common.net.HostAndPort;
+import org.graylog.plugins.metrics.core.jadconfig.StringMapConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
 import java.util.Collections;
@@ -40,7 +41,7 @@ public class MetricsPrometheusReporterConfiguration implements PluginConfigBean 
     @Parameter(value = PREFIX + "job_name", required = true)
     private String jobName = "graylog";
 
-    @Parameter(value = PREFIX + "grouping_key")
+    @Parameter(value = PREFIX + "grouping_key", converter = StringMapConverter.class)
     private Map<String, String> groupingKey = Collections.emptyMap();
 
     public boolean isEnabled() {

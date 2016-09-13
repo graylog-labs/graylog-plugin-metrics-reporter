@@ -10,5 +10,6 @@
 | `metrics_mongodb_report_interval`   | `15s`          | How often to report the metrics to MongoDB.                          |
 | `metrics_mongodb_unit_rates`        | `seconds`      | The time unit used for rates.                                        |
 | `metrics_mongodb_unit_durations`    | `milliseconds` | The time unit used for durations.                                    |
+| `metrics_mongodb_include_metrics`   | `.*`           | A comma-separated list of metric names to report.                    |
 
 [Connection String URI format]:https://docs.mongodb.com/manual/reference/connection-string/

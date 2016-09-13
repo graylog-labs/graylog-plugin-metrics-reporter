@@ -18,3 +18,4 @@
 | `metrics_datadog_udp_prefix`           | [empty]          | The prefix used for reporting metrics to Datadog via UDP.                    |
 | `metrics_datadog_unit_rates`           | `seconds`        | The time unit used for rates.                                                |
 | `metrics_datadog_unit_durations`       | `milliseconds`   | The time unit used for durations.                                            |
+| `metrics_datadog_include_metrics`      | `.*`             | A comma-separated list of metric names to report.                            |

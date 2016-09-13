@@ -23,13 +23,15 @@ import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
 import com.github.joschi.jadconfig.validators.PositiveIntegerValidator;
 import com.github.joschi.jadconfig.validators.StringNotBlankValidator;
 import com.google.common.collect.ImmutableMap;
-import org.graylog.plugins.metrics.elasticsearch.jadconfig.StringMapConverter;
+import org.graylog.plugins.metrics.core.jadconfig.PatternListConverter;
+import org.graylog.plugins.metrics.core.jadconfig.StringMapConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class MetricsElasticsearchReporterConfiguration implements PluginConfigBean {
     private static final String PREFIX = "metrics_elasticsearch_";
@@ -68,7 +70,10 @@ public class MetricsElasticsearchReporterConfiguration implements PluginConfigBe
     private String indexDateFormat = "yyyy-MM";
 
     @Parameter(value = PREFIX + "prefix")
-    private String prefix;
+    private String prefix = null;
+
+    @Parameter(value = PREFIX + "include_metrics", converter = PatternListConverter.class)
+    private List<Pattern> includeMetrics = Collections.singletonList(Pattern.compile(".*"));
 
     public boolean isEnabled() {
         return enabled;
@@ -116,5 +121,9 @@ public class MetricsElasticsearchReporterConfiguration implements PluginConfigBe
 
     public String getPrefix() {
         return prefix;
+    }
+
+    public List<Pattern> getIncludeMetrics() {
+        return includeMetrics;
     }
 }

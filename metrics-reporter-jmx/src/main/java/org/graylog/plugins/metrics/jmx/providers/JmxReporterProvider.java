@@ -17,8 +17,8 @@
 package org.graylog.plugins.metrics.jmx.providers;
 
 import com.codahale.metrics.JmxReporter;
-import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
+import org.graylog.plugins.metrics.core.RegexMetricFilter;
 import org.graylog.plugins.metrics.jmx.MetricsJmxReporterConfiguration;
 
 import javax.inject.Inject;
@@ -41,7 +41,7 @@ public class JmxReporterProvider implements Provider<JmxReporter> {
         return JmxReporter.forRegistry(metricRegistry)
                 .convertDurationsTo(configuration.getUnitDurations())
                 .convertRatesTo(configuration.getUnitRates())
-                .filter(MetricFilter.ALL)
+                .filter(new RegexMetricFilter(configuration.getIncludeMetrics()))
                 .build();
     }
 }

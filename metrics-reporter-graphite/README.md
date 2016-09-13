@@ -13,3 +13,4 @@
 | `metrics_graphite_prefix`            | [empty]          | The prefix used for all metrics.                                     |
 | `metrics_graphite_unit_rates`        | `seconds`        | The time unit used for rates.                                        |
 | `metrics_graphite_unit_durations`    | `milliseconds`   | The time unit used for durations.                                    |
+| `metrics_graphite_include_metrics`   | `.*`             | A comma-separated list of metric names to report.                    |

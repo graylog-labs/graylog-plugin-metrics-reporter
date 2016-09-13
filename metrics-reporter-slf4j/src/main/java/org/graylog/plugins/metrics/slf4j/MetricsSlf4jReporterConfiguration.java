@@ -20,6 +20,7 @@ import com.codahale.metrics.Slf4jReporter;
 import com.github.joschi.jadconfig.Parameter;
 import com.github.joschi.jadconfig.util.Duration;
 import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
+import org.graylog.plugins.metrics.core.jadconfig.PatternListConverter;
 import org.graylog.plugins.metrics.slf4j.converters.LoggerConverter;
 import org.graylog.plugins.metrics.slf4j.converters.LoggingLevelConverter;
 import org.graylog.plugins.metrics.slf4j.converters.MarkerConverter;
@@ -27,7 +28,10 @@ import org.graylog2.plugin.PluginConfigBean;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class MetricsSlf4jReporterConfiguration implements PluginConfigBean {
     private static final String PREFIX = "metrics_slf4j_";
@@ -52,6 +56,9 @@ public class MetricsSlf4jReporterConfiguration implements PluginConfigBean {
 
     @Parameter(value = PREFIX + "level", required = true, converter = LoggingLevelConverter.class)
     private Slf4jReporter.LoggingLevel level = Slf4jReporter.LoggingLevel.TRACE;
+
+    @Parameter(value = PREFIX + "include_metrics", converter = PatternListConverter.class)
+    private List<Pattern> includeMetrics = Collections.singletonList(Pattern.compile(".*"));
 
     public boolean isEnabled() {
         return enabled;
@@ -79,5 +86,9 @@ public class MetricsSlf4jReporterConfiguration implements PluginConfigBean {
 
     public Duration getReportInterval() {
         return reportInterval;
+    }
+
+    public List<Pattern> getIncludeMetrics() {
+        return includeMetrics;
     }
 }

@@ -21,14 +21,17 @@ import com.github.joschi.jadconfig.ValidationException;
 import com.github.joschi.jadconfig.ValidatorMethod;
 import com.github.joschi.jadconfig.util.Duration;
 import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
-import org.graylog.plugins.metrics.influxdb.jadconfig.StringMapConverter;
+import org.graylog.plugins.metrics.core.jadconfig.PatternListConverter;
+import org.graylog.plugins.metrics.core.jadconfig.StringMapConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class MetricsInfluxDbReporterConfiguration implements PluginConfigBean {
     private static final String PREFIX = "metrics_influxdb_";
@@ -68,6 +71,9 @@ public class MetricsInfluxDbReporterConfiguration implements PluginConfigBean {
 
     @Parameter(PREFIX + "skip_idle_metrics")
     private boolean skipIdleMetrics = true;
+
+    @Parameter(value = PREFIX + "include_metrics", converter = PatternListConverter.class)
+    private List<Pattern> includeMetrics = Collections.singletonList(Pattern.compile(".*"));
 
     public boolean isEnabled() {
         return enabled;
@@ -115,6 +121,10 @@ public class MetricsInfluxDbReporterConfiguration implements PluginConfigBean {
 
     public Duration getSocketTimeout() {
         return socketTimeout;
+    }
+
+    public List<Pattern> getIncludeMetrics() {
+        return includeMetrics;
     }
 
     @ValidatorMethod

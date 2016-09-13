@@ -16,11 +16,11 @@
  */
 package org.graylog.plugins.metrics.datadog.providers;
 
-import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
 import com.google.common.base.Throwables;
 import org.coursera.metrics.datadog.DatadogReporter;
 import org.coursera.metrics.datadog.transport.Transport;
+import org.graylog.plugins.metrics.core.RegexMetricFilter;
 import org.graylog.plugins.metrics.datadog.MetricsDatadogReporterConfiguration;
 
 import javax.inject.Inject;
@@ -50,7 +50,7 @@ public class DatadogReporterProvider implements Provider<DatadogReporter> {
                 .withPrefix(configuration.getPrefix())
                 .convertRatesTo(configuration.getUnitRates())
                 .convertDurationsTo(configuration.getUnitDurations())
-                .filter(MetricFilter.ALL);
+                .filter(new RegexMetricFilter(configuration.getIncludeMetrics()));
 
         if (configuration.isEC2Instance()) {
             try {

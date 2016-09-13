@@ -17,6 +17,14 @@
     <name>Graylog Metrics JMX Reporter Plugin</name>
     <description>Plugin for reporting internal Graylog metrics via JMX.</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.graylog.plugins</groupId>
+            <artifactId>metrics-reporter-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

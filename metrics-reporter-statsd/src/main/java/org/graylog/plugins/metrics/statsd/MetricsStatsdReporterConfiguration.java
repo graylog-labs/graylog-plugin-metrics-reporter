@@ -20,9 +20,13 @@ import com.github.joschi.jadconfig.Parameter;
 import com.github.joschi.jadconfig.util.Duration;
 import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
 import com.google.common.net.HostAndPort;
+import org.graylog.plugins.metrics.core.jadconfig.PatternListConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class MetricsStatsdReporterConfiguration implements PluginConfigBean {
     private static final String PREFIX = "metrics_statsd_";
@@ -40,10 +44,13 @@ public class MetricsStatsdReporterConfiguration implements PluginConfigBean {
     private TimeUnit unitDurations = TimeUnit.MILLISECONDS;
 
     @Parameter(PREFIX + "prefix")
-    private String prefix;
+    private String prefix = null;
 
     @Parameter(value = PREFIX + "address", required = true)
     private HostAndPort address = HostAndPort.fromParts("localhost", 8125);
+
+    @Parameter(value = PREFIX + "include_metrics", converter = PatternListConverter.class)
+    private List<Pattern> includeMetrics = Collections.singletonList(Pattern.compile(".*"));
 
     public boolean isEnabled() {
         return enabled;
@@ -67,5 +74,9 @@ public class MetricsStatsdReporterConfiguration implements PluginConfigBean {
 
     public HostAndPort getAddress() {
         return address;
+    }
+
+    public List<Pattern> getIncludeMetrics() {
+        return includeMetrics;
     }
 }

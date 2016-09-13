@@ -20,12 +20,16 @@ import com.github.joschi.jadconfig.Parameter;
 import com.github.joschi.jadconfig.util.Duration;
 import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
 import com.google.common.base.Strings;
+import org.graylog.plugins.metrics.core.jadconfig.PatternListConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
 import java.io.PrintStream;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class MetricsConsoleReporterConfiguration implements PluginConfigBean {
     private static final String PREFIX = "metrics_console_";
@@ -50,6 +54,9 @@ public class MetricsConsoleReporterConfiguration implements PluginConfigBean {
 
     @Parameter(value = PREFIX + "unit_durations", required = true)
     private TimeUnit unitDurations = TimeUnit.MILLISECONDS;
+
+    @Parameter(value = PREFIX + "include_metrics", converter = PatternListConverter.class)
+    private List<Pattern> includeMetrics = Collections.singletonList(Pattern.compile(".*"));
 
     public boolean isEnabled() {
         return enabled;
@@ -86,5 +93,9 @@ public class MetricsConsoleReporterConfiguration implements PluginConfigBean {
             default:
                 return System.out;
         }
+    }
+
+    public List<Pattern> getIncludeMetrics() {
+        return includeMetrics;
     }
 }
