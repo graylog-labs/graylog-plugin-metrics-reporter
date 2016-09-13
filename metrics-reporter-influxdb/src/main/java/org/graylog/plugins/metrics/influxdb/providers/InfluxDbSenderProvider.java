@@ -52,7 +52,7 @@ public class InfluxDbSenderProvider implements Provider<InfluxDbSender> {
                             protocol,
                             uri.getHost(),
                             uri.getPort(),
-                            uri.getPath(),
+                            uri.getPath().replaceFirst("^/", ""),
                             uri.getUserInfo(),
                             configuration.getTimePrecision(),
                             Ints.saturatedCast(configuration.getConnectTimeout().toMilliseconds()),
