@@ -28,6 +28,8 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 import java.net.URI;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 import static java.util.Objects.requireNonNull;
 
@@ -43,36 +45,49 @@ public class InfluxDbSenderProvider implements Provider<InfluxDbSender> {
     public InfluxDbSender get() {
         try {
             final URI uri = configuration.getUri().parseServerAuthority();
+
             final String protocol = uri.getScheme().toLowerCase(Locale.ENGLISH);
+            final String host = uri.getHost();
+            final int port = uri.getPort();
+            final String database = uri.getPath().replace("/", "");
+            if (!Pattern.matches("[a-z][a-z0-9_]*", database)) {
+                throw new IllegalArgumentException("Invalid database name \"" + database + "\"");
+            }
+
+            final int socketTimeout = Ints.saturatedCast(configuration.getSocketTimeout().toMilliseconds());
+            final int connectTimeout = Ints.saturatedCast(configuration.getConnectTimeout().toMilliseconds());
+            final int readTimeout = Ints.saturatedCast(configuration.getReadTimeout().toMilliseconds());
+
+            final TimeUnit timePrecision = configuration.getTimePrecision();
 
             switch (protocol) {
                 case "http":
                 case "https":
                     return new InfluxDbHttpSender(
                             protocol,
-                            uri.getHost(),
-                            uri.getPort(),
-                            uri.getPath(),
+                            host,
+                            port,
+                            database,
                             uri.getUserInfo(),
-                            configuration.getTimePrecision(),
-                            Ints.saturatedCast(configuration.getConnectTimeout().toMilliseconds()),
-                            Ints.saturatedCast(configuration.getReadTimeout().toMilliseconds()),
+                            timePrecision,
+                            connectTimeout,
+                            readTimeout,
                             "");
                 case "tcp":
                     return new InfluxDbTcpSender(
-                            uri.getHost(),
-                            uri.getPort(),
-                            Ints.saturatedCast(configuration.getSocketTimeout().toMilliseconds()),
-                            uri.getPath(),
-                            configuration.getTimePrecision(),
+                            host,
+                            port,
+                            socketTimeout,
+                            database,
+                            timePrecision,
                             "");
                 case "udp":
                     return new InfluxDbUdpSender(
-                            uri.getHost(),
-                            uri.getPort(),
-                            Ints.saturatedCast(configuration.getSocketTimeout().toMilliseconds()),
-                            uri.getPath(),
-                            configuration.getTimePrecision(),
+                            host,
+                            port,
+                            socketTimeout,
+                            database,
+                            timePrecision,
                             "");
                 default:
                     throw new IllegalArgumentException("Unsupported protocol \"" + protocol + "\"");

@@ -20,13 +20,16 @@ import com.izettle.metrics.influxdb.InfluxDbHttpSender;
 import com.izettle.metrics.influxdb.InfluxDbSender;
 import com.izettle.metrics.influxdb.InfluxDbTcpSender;
 import com.izettle.metrics.influxdb.InfluxDbUdpSender;
+import com.izettle.metrics.influxdb.data.InfluxDbWriteObject;
 import org.graylog.plugins.metrics.influxdb.MetricsInfluxDbReporterConfiguration;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.lang.reflect.Field;
 import java.net.URI;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class InfluxDbSenderProviderTest {
@@ -87,4 +90,35 @@ public class InfluxDbSenderProviderTest {
         assertTrue(influxDbSender instanceof InfluxDbUdpSender);
     }
 
+    @Test
+    public void getCreatesSenderWithCorrectDatabaseName() throws Exception {
+        final MetricsInfluxDbReporterConfiguration configuration = new MetricsInfluxDbReporterConfiguration() {
+            @Override
+            public URI getUri() {
+                return URI.create("udp://127.0.0.1:8086/data_base_1");
+            }
+        };
+        final InfluxDbSenderProvider provider = new InfluxDbSenderProvider(configuration);
+        final InfluxDbSender influxDbSender = provider.get();
+
+        final Field field = Class.forName("com.izettle.metrics.influxdb.InfluxDbBaseSender").getDeclaredField("influxDbWriteObject");
+        field.setAccessible(true);
+        final InfluxDbWriteObject influxDbWriteObject = (InfluxDbWriteObject) field.get(influxDbSender);
+        assertEquals("data_base_1", influxDbWriteObject.getDatabase());
+    }
+
+    @Test
+    public void getWithInvalidDatabaseName() throws Exception {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Invalid database name \"1database\"");
+
+        final MetricsInfluxDbReporterConfiguration configuration = new MetricsInfluxDbReporterConfiguration() {
+            @Override
+            public URI getUri() {
+                return URI.create("udp://127.0.0.1:8086/1database");
+            }
+        };
+        final InfluxDbSenderProvider provider = new InfluxDbSenderProvider(configuration);
+        provider.get();
+    }
 }
