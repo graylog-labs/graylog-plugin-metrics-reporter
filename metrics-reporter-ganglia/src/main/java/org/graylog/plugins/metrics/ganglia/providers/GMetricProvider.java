@@ -43,7 +43,8 @@ public class GMetricProvider implements Provider<GMetric> {
                     configuration.getUDPAddressingMode(),
                     configuration.getTtl(),
                     configuration.isGanglia31x(),
-                    configuration.getUUID());
+                    configuration.getUUID(),
+                    configuration.getSpoof());
         } catch (IOException e) {
             throw Throwables.propagate(e);
         }
