@@ -41,6 +41,9 @@ public class MetricsGangliaReporterConfiguration implements PluginConfigBean {
     @Parameter(value = PREFIX + "group", required = true)
     private String group = "127.0.0.1";
 
+    @Parameter(value = PREFIX + "spoof", required = false)
+    private String spoof = "";
+
     @Parameter(value = PREFIX + "port", required = true, validator = InetPortValidator.class)
     private int port = 8649;
 
@@ -99,6 +102,10 @@ public class MetricsGangliaReporterConfiguration implements PluginConfigBean {
 
     public String getGroup() {
         return group;
+    }
+
+    public String getSpoof() {
+        return spoof;
     }
 
     public int getPort() {
