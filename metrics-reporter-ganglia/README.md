@@ -6,6 +6,7 @@
 | --------------------------------- | -------------------------- | --------------------------------------------------------------------------------- |
 | `metrics_ganglia_enabled`         | `false`                    | Whether to start the metrics reporter.                                            |
 | `metrics_ganglia_group`           | `127.0.0.1`                | The group (IP address) used to send metrics to Ganglia.                           |
+| `metrics_ganglia_spoof`           | [empty]                    | The spoof (IP:name) used to send metrics to Ganglia.                           |
 | `metrics_ganglia_port`            | `8649`                     | The port used to send metrics to Ganglia.                                         |
 | `metrics_ganglia_addressing_mode` | [inferred from IP address] | The UDP addressing mode used to send metrics to Ganglia (`UNICAST`, `MULTICAST`). |
 | `metrics_ganglia_ttl`             | `1`                        | The TTL of Multicast packets.                                                     |
