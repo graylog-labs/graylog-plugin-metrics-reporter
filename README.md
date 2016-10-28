@@ -9,6 +9,7 @@ A collection of plugins for reporting internal Graylog metrics to other systems.
 * [metrics-reporter-datadog](metrics-reporter-datadog/README.md)
 * [metrics-reporter-elasticsearch](metrics-reporter-elasticsearch/README.md)
 * [metrics-reporter-ganglia](metrics-reporter-ganglia/README.md)
+* [metrics-reporter-gelf](metrics-reporter-gelf/README.md)
 * [metrics-reporter-graphite](metrics-reporter-graphite/README.md)
 * [metrics-reporter-influxdb](metrics-reporter-influxdb/README.md)
 * [metrics-reporter-jmx](metrics-reporter-jmx/README.md)
