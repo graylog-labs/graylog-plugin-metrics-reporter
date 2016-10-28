@@ -16,6 +16,7 @@
         <module>metrics-reporter-cassandra</module>
         <module>metrics-reporter-datadog</module>
         <module>metrics-reporter-elasticsearch</module>
+        <module>metrics-reporter-gelf</module>
         <module>metrics-reporter-influxdb</module>
         <module>metrics-reporter-librato</module>
         <module>metrics-reporter-mongodb</module>
