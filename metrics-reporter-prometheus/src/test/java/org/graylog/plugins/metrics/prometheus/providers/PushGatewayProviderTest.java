@@ -47,7 +47,7 @@ public class PushGatewayProviderTest {
         pushGateway.push(CollectorRegistry.defaultRegistry, "test");
 
         final RecordedRequest request = server.takeRequest();
-        assertEquals("POST", request.getMethod());
+        assertEquals("PUT", request.getMethod());
         assertEquals("/metrics/job/test", request.getPath());
         assertEquals("text/plain; version=0.0.4; charset=utf-8", request.getHeader("Content-Type"));
         assertEquals(0L, request.getBodySize());
