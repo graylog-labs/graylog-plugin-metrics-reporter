@@ -6,7 +6,7 @@
 | -------------------------------------------- | ----------------- | -------------------------------------------------------------- |
 | `metrics_gelf_enabled`                       | `false`           | Whether to start the metrics reporter.                         |
 | `metrics_gelf_transport`                     | `UDP`             | The GELF transport protocol (`UDP`, `TCP`).                    |
-| `metrics_gelf_address`                       | `localhost:12201` | The network address of Graylog.                                |
+| `metrics_gelf_host`                       | `localhost:12201` | The network address of Graylog.                                |
 | `metrics_gelf_level`                         | `INFO`            | The GELF message level used for metrics.                       |
 | `metrics_gelf_source`                        | `metrics`         | The name of the source of the GELF messages.                   |
 | `metrics_gelf_prefix`                        | [empty]           | The prefix for all metrics.                                    |
