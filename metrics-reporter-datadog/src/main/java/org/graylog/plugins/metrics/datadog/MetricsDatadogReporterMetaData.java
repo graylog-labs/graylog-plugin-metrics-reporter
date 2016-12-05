@@ -21,11 +21,11 @@ import org.graylog.plugins.metrics.core.BasePluginMetaData;
 public class MetricsDatadogReporterMetaData extends BasePluginMetaData {
     @Override
     public String getName() {
-        return "Internal Metrics Graphite Reporter";
+        return "Internal Metrics Datadog Reporter";
     }
 
     @Override
     public String getDescription() {
-        return "A plugin for reporting internal Graylog metrics to Graphite.";
+        return "A plugin for reporting internal Graylog metrics to Datadog.";
     }
 }
