@@ -51,17 +51,15 @@ public class MetricsResourceTest extends JerseyTest {
     }
 
     @Test
-     public void prometheusMetricStreamsMetrics() throws Exception {
-     final Response response = target("/metrics").request().get();
+    public void prometheusMetricStreamsMetrics() throws Exception {
+        final Response response = target("/metrics").request().get();
+        assertEquals(200, response.getStatus());
+        assertEquals("text/plain;charset=utf-8;version=0.0.4",
+                response.getHeaderString("Content-Type"));
 
-     assertEquals(200, response.getStatus());
-     assertEquals("text/plain;charset=utf-8;version=0.0.4",
-     response.getHeaderString("Content-Type"));
-
-     final String body = response.readEntity(String.class);
-        System.out.println(body);
-     assertTrue(body.contains("test_counter 42.0\n"));
-     assertTrue(body.contains(
+        final String body = response.readEntity(String.class);
+        assertTrue(body.contains("test_counter 42.0\n"));
+        assertTrue(body.contains(
                 "org_graylog2_inputs_gelf_http_GELFHttpInput_rawSize_total{hash=\"5836b5852b3f8c1fad705b3b\",} 0.0\n"));
-     }
+    }
 }
