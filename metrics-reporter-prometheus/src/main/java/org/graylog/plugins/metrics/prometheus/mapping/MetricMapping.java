@@ -38,6 +38,90 @@ public class MetricMapping {
                         "org_graylog2_inputs_gelf_http_GELFHttpInput_rawSize_total",
                         "org.graylog2.inputs.gelf.http.GELFHttpInput.(.*).rawSize.total",
                         new String[] { "hash" }));
+        configs.add(
+                new MappingConfig(
+                        "org_graylog2_plugin_streams_Stream_incomingMessages_1_sec_rate",
+                        "org.graylog2.plugin.streams.Stream.(.*).incomingMessages.1.sec.rate",
+                        new String[] { "hash" }
+                ));
+        configs.add(
+                new MappingConfig(
+                        "org_graylog_inputs_beats_plugin_BeatsInput_emptyMessages",
+                        "org.graylog.inputs.beats.plugin.BeatsInput.(.*).emptyMessages",
+                        new String[] { "hash" }
+                ));
+        configs.add(
+                new MappingConfig(
+                        "org_graylog2_inputs_gelf_http_GELFHttpInput_org_graylog2_inputs_transports_HttpTransport_worker_executor_service_running",
+                        "org.graylog2.inputs.gelf.http.GELFHttpInput.(.*).org.graylog2.inputs.transports.HttpTransport.worker.executor.service.running",
+                        new String[] { "hash" }
+                ));
+        configs.add(
+                new MappingConfig(
+                        "org_graylog2_inputs_codecs_GelfCodec_parseTime",
+                        "org.graylog2.inputs.codecs.GelfCodec.(.*).parseTime",
+                        new String[] { "hash" }
+                ));
+        configs.add(
+                new MappingConfig(
+                        "org_graylog2_inputs_gelf_http_GELFHttpInput_org_graylog2_inputs_transports_HttpTransport_worker_executor_service_duration",
+                        "org.graylog2.inputs.gelf.http_GELFHttpInput.(.*).org.graylog2.inputs.transports.HttpTransport.worker.executor.service.duration",
+                        new String[] { "hash" }
+                ));
+        configs.add(
+                new MappingConfig(
+                        "org_graylog2_plugin_streams_StreamRule_executionTime",
+                        "org.graylog2.plugin.streams.StreamRule.(.*).executionTime",
+                        new String[] { "hash" }
+                ));
+        configs.add(
+                new MappingConfig(
+                        "org_graylog_inputs_beats_plugin_BeatsInput_incomingMessages_total",
+                        "org.graylog.inputs.beats.plugin.BeatsInput.(.*).incomingMessages.total",
+                        new String[] { "hash" }
+                ));
+        configs.add(
+                new MappingConfig(
+                        "org_graylog_inputs_beats_plugin_BeatsInput_rawSize_total",
+                        "org.graylog.inputs.beats.plugin.BeatsInput.(.*).rawSize.total",
+                        new String[] { "hash" }
+                ));
+        configs.add(
+                new MappingConfig(
+                        "org_graylog2_inputs_codecs_GelfCodec_incomplete_total",
+                        "org.graylog2.inputs.codecs.GelfCodec.(.*).incomplete.total",
+                        new String[] { "hash" }
+                ));
+        configs.add(
+                new MappingConfig(
+                        "org_graylog2_inputs_codecs_GelfCodec_processedMessages_total",
+                        "org.graylog2.inputs.codecs.GelfCodec.(.*).processedMessages.total",
+                        new String[] { "hash" }
+                ));
+        configs.add(
+                new MappingConfig(
+                        "org_graylog2_inputs_gelf_http_GELFHttpInput_org_graylog2_inputs_transports_HttpTransport_worker_executor_service_completed_total",
+                        "org.graylog2.inputs.gelf.http.GELFHttpInput.(.*).org.graylog2.inputs.transports.HttpTransport_worker_executor_service_completed_total",
+                        new String[] { "hash" }
+                ));
+        configs.add(
+                new MappingConfig(
+                        "org_graylog2_inputs_gelf_http_GELFHttpInput_inputs_transports_HttpTransport_worker_executor_service_submitted_total",
+                        "org.graylog2.inputs.gelf.http.GELFHttpInput.(.*).org.graylog2.inputs.transports.HttpTransport.worker.executor.service.submitted.total",
+                        new String[] { "hash" }
+                ));
+        configs.add(
+                new MappingConfig(
+                        "org_graylog2_inputs_gelf_http_GELFHttpInput_rawSize_total",
+                        "org.graylog2.inputs.gelf.http.GELFHttpInput.(.*).rawSize.total",
+                        new String[] { "hash" }
+                ));
+        configs.add(
+                new MappingConfig(
+                        "org_graylog2_plugin_streams_Stream_incomingMessages_total",
+                        "org.graylog2.plugin.streams.Stream.(.*).incomingMessages.total",
+                        new String[] { "hash" }
+                ));
     }
 
     public MetricMapping(final List<MappingConfig> configs) {
