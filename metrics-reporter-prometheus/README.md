@@ -2,7 +2,7 @@
 
 ## Pulling metrics
 
-The Prometheus metrics endpoint is available at `http://graylog.example.com:12900/plugins/org.graylog.plugins.metrics.prometheus/metrics`.
+The Prometheus metrics endpoint is available at `http://graylog.example.com:9000/api/plugins/org.graylog.plugins.metrics.prometheus/metrics`.
 
 The corresponding configuration in `prometheus.yml` would look like the following code snippet:
 
@@ -11,14 +11,14 @@ The corresponding configuration in `prometheus.yml` would look like the followin
 scrape_configs:
   - job_name: 'graylog'
     scrape_interval: 15s
-    metrics_path: '/plugins/org.graylog.plugins.metrics.prometheus/metrics'
+    metrics_path: '/api/plugins/org.graylog.plugins.metrics.prometheus/metrics'
     basic_auth:
       username: graylog_username
       password: graylog_password
     # Optional TLS configuration; see https://prometheus.io/docs/operating/configuration/#<tls_config>
     #tls_config:
     target_groups:
-      - targets: ['graylog1.example.com:12900', 'graylog2.example.com:12900']
+      - targets: ['graylog1.example.com:9000', 'graylog2.example.com:9000']
 ```
 
 ## Configuration settings
