@@ -25,7 +25,8 @@ scrape_configs:
 
 | Setting                              | Default          | Description                                                                                       |
 | ------------------------------------ | ---------------- | ------------------------------------------------------------------------------------------------- |
-| `metrics_prometheus_enabled`         | `false`          | Whether to push the metrics to a [Prometheus Pushgateway].                                        |
+| `metrics_prometheus_enabled`         | `false`          | Whether to expose prometheus metrics.                                        |
+| `metrics_prometheus_pushgateway_disabled`| `false`      | Whether to disable push metrics to a [Prometheus Pushgateway].                                        |
 | `metrics_prometheus_report_interval` | `15s`            | How often to report metrics to the [Prometheus Pushgateway].                                      |
 | `metrics_prometheus_address`         | `127.0.0.1:9091` | The network address of the [Prometheus Pushgateway].                                              |
 | `metrics_prometheus_job_name`        | `graylog`        | The job name used with the [Prometheus Pushgateway].                                              |

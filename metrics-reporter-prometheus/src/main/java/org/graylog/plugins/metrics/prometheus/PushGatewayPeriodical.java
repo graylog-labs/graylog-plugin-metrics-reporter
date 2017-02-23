@@ -47,10 +47,12 @@ public class PushGatewayPeriodical extends Periodical {
     @Override
     public void doRun() {
         try {
-            pushGateway.push(
+        	if (configuration.isPushGatewayDisabled()) {
+        		pushGateway.push(
                     collectorRegistry,
                     configuration.getJobName(),
                     configuration.getGroupingKey());
+        	}
         } catch (IOException e) {
             LOG.error("Error while sending metrics to Prometheus Pushgateway", e);
         }
