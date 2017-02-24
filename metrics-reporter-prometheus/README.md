@@ -17,7 +17,7 @@ scrape_configs:
       password: graylog_password
     # Optional TLS configuration; see https://prometheus.io/docs/operating/configuration/#<tls_config>
     #tls_config:
-    target_groups:
+    static_configs:
       - targets: ['graylog1.example.com:9000', 'graylog2.example.com:9000']
 ```
 
