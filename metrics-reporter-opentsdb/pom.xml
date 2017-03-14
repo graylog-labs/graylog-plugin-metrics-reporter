@@ -11,15 +11,11 @@
         <version>1.4.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>metrics-reporter-prometheus</artifactId>
+    <artifactId>metrics-reporter-opentsdb</artifactId>
     <packaging>jar</packaging>
 
-    <name>Graylog Metrics Prometheus Reporter Plugin</name>
-    <description>Plugin for reporting internal Graylog metrics to Prometheus.</description>
-
-    <properties>
-        <simpleclient.version>0.0.21</simpleclient.version>
-    </properties>
+    <name>Graylog Metrics OpenTSDB Reporter Plugin</name>
+    <description>Plugin for reporting internal Graylog metrics to OpenTSDB.</description>
 
     <dependencies>
         <dependency>
@@ -28,30 +24,9 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.prometheus</groupId>
-            <artifactId>simpleclient</artifactId>
-            <version>${simpleclient.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.prometheus</groupId>
-            <artifactId>simpleclient_pushgateway</artifactId>
-            <version>${simpleclient.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.prometheus</groupId>
-            <artifactId>simpleclient_dropwizard</artifactId>
-            <version>${simpleclient.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>mockwebserver</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.test-framework.providers</groupId>
-            <artifactId>jersey-test-framework-provider-inmemory</artifactId>
-            <version>2.22.1</version>
-            <scope>test</scope>
+            <groupId>com.github.sps.metrics</groupId>
+            <artifactId>metrics-opentsdb</artifactId>
+            <version>1.1.0</version>
         </dependency>
     </dependencies>
 

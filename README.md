@@ -15,6 +15,7 @@ A collection of plugins for reporting internal Graylog metrics to other systems.
 * [metrics-reporter-jmx](metrics-reporter-jmx/README.md)
 * [metrics-reporter-librato](metrics-reporter-librato/README.md)
 * [metrics-reporter-mongodb](metrics-reporter-mongodb/README.md)
+* [metrics-reporter-opentsdb](metrics-reporter-opentsdb/README.md)
 * [metrics-reporter-prometheus](metrics-reporter-prometheus/README.md)
 * [metrics-reporter-slf4j](metrics-reporter-slf4j/README.md)
 * [metrics-reporter-statsd](metrics-reporter-statsd/README.md)
