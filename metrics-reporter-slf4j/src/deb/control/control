@@ -1,4 +1,4 @@
-Package: [[name]]
+Package: [[artifactId]]
 Version: [[version]]
 Architecture: all
 Maintainer: Graylog, Inc. <hello@graylog.com>
