@@ -17,7 +17,7 @@
 package org.graylog.plugins.metrics.librato;
 
 import com.github.joschi.jadconfig.util.Duration;
-import com.librato.metrics.LibratoReporter;
+import com.librato.metrics.reporter.LibratoReporter;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;

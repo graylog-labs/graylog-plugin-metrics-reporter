@@ -16,7 +16,7 @@
  */
 package org.graylog.plugins.metrics.librato;
 
-import com.librato.metrics.LibratoReporter;
+import com.librato.metrics.reporter.LibratoReporter;
 import org.graylog.plugins.metrics.librato.providers.LibratoReporterProvider;
 import org.graylog2.plugin.PluginConfigBean;
 import org.graylog2.plugin.PluginModule;

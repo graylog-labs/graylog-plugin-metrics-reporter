@@ -17,7 +17,7 @@
 package org.graylog.plugins.metrics.librato.providers;
 
 import com.codahale.metrics.MetricRegistry;
-import com.librato.metrics.LibratoReporter;
+import com.librato.metrics.reporter.LibratoReporter;
 import org.graylog.plugins.metrics.librato.MetricsLibratoReporterConfiguration;
 import org.junit.Test;
 

@@ -18,7 +18,8 @@ package org.graylog.plugins.metrics.librato.providers;
 
 import com.codahale.metrics.MetricRegistry;
 import com.github.joschi.jadconfig.util.Duration;
-import com.librato.metrics.LibratoReporter;
+import com.librato.metrics.reporter.LibratoReporter;
+import com.librato.metrics.reporter.ReporterBuilder;
 import org.graylog.plugins.metrics.core.RegexMetricFilter;
 import org.graylog.plugins.metrics.librato.MetricsLibratoReporterConfiguration;
 
@@ -40,7 +41,7 @@ public class LibratoReporterProvider implements Provider<LibratoReporter> {
     @Override
     public LibratoReporter get() {
         final Duration timeout = configuration.getTimeout();
-        return LibratoReporter.builder(metricRegistry, configuration.getUsername(), configuration.getToken(), configuration.getSource())
+        final ReporterBuilder builder = LibratoReporter.builder(metricRegistry, configuration.getUsername(), configuration.getToken())
                 .setName(configuration.getName())
                 .setPrefix(configuration.getPrefix())
                 .setPrefixDelimiter(configuration.getPrefixDelimiter())
@@ -49,8 +50,22 @@ public class LibratoReporterProvider implements Provider<LibratoReporter> {
                 .setOmitComplexGauges(configuration.isOmitComplexGauges())
                 .setDurationUnit(configuration.getUnitDurations())
                 .setRateUnit(configuration.getUnitRates())
-                .setSourceRegex(configuration.getSourceRegex())
                 .setFilter(new RegexMetricFilter(configuration.getIncludeMetrics()))
-                .build();
+                .setEnableLegacy(configuration.isEnableLegacy())
+                .setEnableTagging(configuration.isEnableTagging());
+
+        if (configuration.isEnableTagging()) {
+            configuration.getTags().forEach(builder::addTag);
+        }
+
+        if (configuration.getSource() != null) {
+            builder.setSource(configuration.getSource());
+        }
+
+        if (configuration.getSourceRegex() != null) {
+            builder.setSourceRegex(configuration.getSourceRegex().pattern());
+        }
+
+        return builder.build();
     }
 }

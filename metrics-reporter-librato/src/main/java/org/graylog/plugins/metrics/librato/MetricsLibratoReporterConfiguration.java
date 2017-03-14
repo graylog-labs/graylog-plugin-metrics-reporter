@@ -21,10 +21,12 @@ import com.github.joschi.jadconfig.util.Duration;
 import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
 import com.github.joschi.jadconfig.validators.StringNotBlankValidator;
 import org.graylog.plugins.metrics.core.jadconfig.PatternListConverter;
+import org.graylog.plugins.metrics.core.jadconfig.StringMapConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
@@ -72,6 +74,15 @@ public class MetricsLibratoReporterConfiguration implements PluginConfigBean {
 
     @Parameter(value = PREFIX + "source_regex")
     private Pattern sourceRegex;
+
+    @Parameter(value = PREFIX + "enable_legacy")
+    private boolean enableLegacy = true;
+
+    @Parameter(value = PREFIX + "enable_tagging")
+    private boolean enableTagging = true;
+
+    @Parameter(value = PREFIX + "tags", converter = StringMapConverter.class)
+    private Map<String, String> tags = Collections.emptyMap();
 
     @Parameter(value = PREFIX + "include_metrics", converter = PatternListConverter.class)
     private List<Pattern> includeMetrics = Collections.singletonList(Pattern.compile(".*"));
@@ -134,5 +145,17 @@ public class MetricsLibratoReporterConfiguration implements PluginConfigBean {
 
     public List<Pattern> getIncludeMetrics() {
         return includeMetrics;
+    }
+
+    public boolean isEnableLegacy() {
+        return enableLegacy;
+    }
+
+    public boolean isEnableTagging() {
+        return enableTagging;
+    }
+
+    public Map<String, String> getTags() {
+        return tags;
     }
 }

@@ -18,7 +18,7 @@ package org.graylog.plugins.metrics.librato;
 
 import com.github.joschi.jadconfig.util.Duration;
 import com.google.common.util.concurrent.AbstractIdleService;
-import com.librato.metrics.LibratoReporter;
+import com.librato.metrics.reporter.LibratoReporter;
 
 import javax.inject.Inject;
 
