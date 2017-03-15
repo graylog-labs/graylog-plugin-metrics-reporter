@@ -1,4 +1,7 @@
 # Graylog Metrics Reporter plugins
+
+[![Github Downloads](https://img.shields.io/github/downloads/Graylog2/graylog-plugin-metrics-reporter/total.svg)](https://github.com/Graylog2/graylog-plugin-metrics-reporter/releases)
+[![GitHub Release](https://img.shields.io/github/release/Graylog2/graylog-plugin-metrics-reporter.svg)](https://github.com/Graylog2/graylog-plugin-metrics-reporter/releases)
 [![Build Status](https://travis-ci.org/Graylog2/graylog-plugin-metrics-reporter.svg?branch=master)](https://travis-ci.org/Graylog2/graylog-plugin-metrics-reporter)
 
 A collection of plugins for reporting internal Graylog metrics to other systems.
