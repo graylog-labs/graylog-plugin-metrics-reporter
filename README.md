@@ -6,6 +6,10 @@
 
 A collection of plugins for reporting internal Graylog metrics to other systems.
 
+## Installation
+
+Place the latest release in your Graylog Plugin folder and add the configuration to your server.conf. The settings for the receiver system are documented in seperate files:
+
 * [metrics-reporter-cassandra](metrics-reporter-cassandra/README.md)
 * [metrics-reporter-console](metrics-reporter-console/README.md)
 * [metrics-reporter-csv](metrics-reporter-csv/README.md)
@@ -22,6 +26,9 @@ A collection of plugins for reporting internal Graylog metrics to other systems.
 * [metrics-reporter-prometheus](metrics-reporter-prometheus/README.md)
 * [metrics-reporter-slf4j](metrics-reporter-slf4j/README.md)
 * [metrics-reporter-statsd](metrics-reporter-statsd/README.md)
+
+After you had finished the configuration you need to restart your Graylog server. This plugin and the configuration need to be placed on every Graylog server if you run a cluster.
+
 
 
 ## Development
