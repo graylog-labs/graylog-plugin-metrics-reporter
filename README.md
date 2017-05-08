@@ -6,6 +6,14 @@
 
 A collection of plugins for reporting internal Graylog metrics to other systems.
 
+## Installation
+
+Put the JAR file of the desired metrics reporter plugin into the Graylog plugin directory of each Graylog node and add the relevant configuration settings to their configuration files.
+
+After installing the metrics reporter plugin and adding the configuration settings, Graylog needs to be restarted.
+
+Specific settings for each metrics reporter plugin have been documented in the respective README files:
+
 * [metrics-reporter-cassandra](metrics-reporter-cassandra/README.md)
 * [metrics-reporter-console](metrics-reporter-console/README.md)
 * [metrics-reporter-csv](metrics-reporter-csv/README.md)
@@ -22,6 +30,7 @@ A collection of plugins for reporting internal Graylog metrics to other systems.
 * [metrics-reporter-prometheus](metrics-reporter-prometheus/README.md)
 * [metrics-reporter-slf4j](metrics-reporter-slf4j/README.md)
 * [metrics-reporter-statsd](metrics-reporter-statsd/README.md)
+
 
 
 ## Development
