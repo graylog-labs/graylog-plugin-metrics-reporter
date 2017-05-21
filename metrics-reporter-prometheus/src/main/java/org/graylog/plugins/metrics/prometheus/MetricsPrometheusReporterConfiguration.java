@@ -31,6 +31,9 @@ public class MetricsPrometheusReporterConfiguration implements PluginConfigBean 
 
     @Parameter(PREFIX + "enabled")
     private boolean enabled = false;
+    
+    @Parameter(PREFIX + "pushgateway_disabled")
+    private boolean pushGatewayDisabled = true;
 
     @Parameter(value = PREFIX + "report_interval", required = true, validator = PositiveDurationValidator.class)
     private Duration reportInterval = Duration.seconds(15L);
@@ -46,6 +49,10 @@ public class MetricsPrometheusReporterConfiguration implements PluginConfigBean 
 
     public boolean isEnabled() {
         return enabled;
+    }
+    
+    public boolean isPushGatewayDisabled() {
+        return pushGatewayDisabled;
     }
 
     public Duration getReportInterval() {
