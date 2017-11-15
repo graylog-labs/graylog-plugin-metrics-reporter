@@ -5,6 +5,7 @@
 | Setting                                     | Default          | Description                                                                                               |
 | ------------------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------------- |
 | `metrics_cloudwatch_enabled`                | `false`          | Whether to start the metrics reporter.|
+| `metrics_cloudwatch_region`                | `us-east-1`       | Especify the CloudWatch region.|
 | `metrics_cloudwatch_report_interval`        | `15s`            | How often to report the metrics to CloudWatch.|
 | `metrics_cloudwatch_namespace`              | `Graylog`        | The name of the namespace of CloudWatch to write to.|
 | `metrics_cloudwatch_timestamp_local`        | `false`          | True to use the local timestamp.|
