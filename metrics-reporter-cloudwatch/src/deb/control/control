@@ -1,0 +1,9 @@
+Package: [[artifactId]]
+Version: [[version]]
+Architecture: all
+Maintainer: Graylog, Inc. <hello@graylog.com>
+Section: web
+Priority: optional
+Depends: graylog-server
+Description: [[description]]
+Homepage: https://www.graylog.org/
