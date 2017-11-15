@@ -24,6 +24,7 @@ import javax.inject.Provider;
 import org.graylog.plugins.metrics.cloudwatch.MetricsCloudWatchReporterConfiguration;
 import org.graylog.plugins.metrics.core.RegexMetricFilter;
 
+import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClientBuilder;
 import com.blacklocus.metrics.CloudWatchReporter;
 import com.blacklocus.metrics.CloudWatchReporterBuilder;
 import com.codahale.metrics.MetricRegistry;
@@ -42,6 +43,7 @@ public class CloudWatchReporterProvider implements Provider<CloudWatchReporter> 
     @Override
     public CloudWatchReporter get() {
         return new CloudWatchReporterBuilder()
+        			.withClient(AmazonCloudWatchAsyncClientBuilder.defaultClient())
                     .withNamespace(configuration.getNamespace())
                     .withTimestampLocal(configuration.getTimestampLocal())
                     .withDimensions(configuration.getDimensions())
