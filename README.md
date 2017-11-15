@@ -15,6 +15,7 @@ After installing the metrics reporter plugin and adding the configuration settin
 Specific settings for each metrics reporter plugin have been documented in the respective README files:
 
 * [metrics-reporter-cassandra](metrics-reporter-cassandra/README.md)
+* [metrics-reporter-cloudwatch](metrics-reporter-cloudwatch/README.md)
 * [metrics-reporter-console](metrics-reporter-console/README.md)
 * [metrics-reporter-csv](metrics-reporter-csv/README.md)
 * [metrics-reporter-datadog](metrics-reporter-datadog/README.md)
