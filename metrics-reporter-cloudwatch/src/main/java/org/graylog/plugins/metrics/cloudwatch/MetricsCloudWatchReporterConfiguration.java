@@ -54,6 +54,9 @@ public class MetricsCloudWatchReporterConfiguration implements PluginConfigBean 
     
     @Parameter(value = PREFIX + "dimensions", required = true)
     private String dimensions;
+    
+    @Parameter(value = PREFIX + "region")
+    private String region = "us-east-1";
 
     public boolean isEnabled() {
         return enabled;
@@ -85,5 +88,9 @@ public class MetricsCloudWatchReporterConfiguration implements PluginConfigBean 
     
     public String getDimensions() {
     	return dimensions;
+    }
+    
+    public String getRegion() {
+    	return region;
     }
 }

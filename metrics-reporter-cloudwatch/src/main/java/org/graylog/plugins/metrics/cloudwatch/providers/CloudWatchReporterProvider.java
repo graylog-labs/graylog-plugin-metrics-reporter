@@ -42,8 +42,9 @@ public class CloudWatchReporterProvider implements Provider<CloudWatchReporter> 
 
     @Override
     public CloudWatchReporter get() {
-        return new CloudWatchReporterBuilder()
-        			.withClient(AmazonCloudWatchAsyncClientBuilder.defaultClient())
+    	final AmazonCloudWatchAsyncClientBuilder amazonCloudWatchAsyncBuilder = AmazonCloudWatchAsyncClientBuilder.standard();
+    	return new CloudWatchReporterBuilder()
+        			.withClient(amazonCloudWatchAsyncBuilder.withRegion(configuration.getRegion()).build())
                     .withNamespace(configuration.getNamespace())
                     .withTimestampLocal(configuration.getTimestampLocal())
                     .withDimensions(configuration.getDimensions())
