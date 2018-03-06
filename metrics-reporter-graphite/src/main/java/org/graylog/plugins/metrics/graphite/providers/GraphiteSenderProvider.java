@@ -20,6 +20,7 @@ import com.codahale.metrics.graphite.Graphite;
 import com.codahale.metrics.graphite.GraphiteSender;
 import com.codahale.metrics.graphite.GraphiteUDP;
 import com.codahale.metrics.graphite.PickledGraphite;
+import com.google.common.net.HostAndPort;
 import org.graylog.plugins.metrics.graphite.MetricsGraphiteReporterConfiguration;
 
 import javax.inject.Inject;
@@ -38,17 +39,22 @@ public class GraphiteSenderProvider implements Provider<GraphiteSender> {
 
     @Override
     public GraphiteSender get() {
+        HostAndPort hostAndPort = configuration.getAddress();
+        String host = hostAndPort.getHostText();
+        int port = hostAndPort.getPortOrDefault(2003);
+
         switch (configuration.getProtocol()) {
             case PICKLE:
                 return new PickledGraphite(
-                        configuration.getAddress(),
+                        host,
+                        port,
                         SocketFactory.getDefault(),
                         configuration.getCharset(),
                         configuration.getPickleBatchSize());
             case TCP:
-                return new Graphite(configuration.getAddress(), SocketFactory.getDefault(), configuration.getCharset());
+                return new Graphite(host, port, SocketFactory.getDefault(), configuration.getCharset());
             case UDP:
-                return new GraphiteUDP(configuration.getAddress());
+                return new GraphiteUDP(host, port);
             default:
                 throw new IllegalArgumentException("Unknown Graphite protocol \"" + configuration.getProtocol() + "\"");
         }
