@@ -20,11 +20,11 @@ import com.github.joschi.jadconfig.Parameter;
 import com.github.joschi.jadconfig.util.Duration;
 import com.github.joschi.jadconfig.validators.PositiveDurationValidator;
 import com.github.joschi.jadconfig.validators.PositiveIntegerValidator;
+import com.google.common.net.HostAndPort;
 import org.graylog.plugins.metrics.core.jadconfig.PatternListConverter;
 import org.graylog.plugins.metrics.graphite.converters.GraphiteProtocolConverter;
 import org.graylog2.plugin.PluginConfigBean;
 
-import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
@@ -39,7 +39,7 @@ public class MetricsGraphiteReporterConfiguration implements PluginConfigBean {
     private boolean enabled = false;
 
     @Parameter(value = PREFIX + "address", required = true)
-    private InetSocketAddress address = new InetSocketAddress("127.0.0.1", 2003);
+    private HostAndPort address = HostAndPort.fromParts("127.0.0.1", 2003);
 
     @Parameter(value = PREFIX + "charset", required = true)
     private Charset charset = StandardCharsets.UTF_8;
@@ -73,7 +73,7 @@ public class MetricsGraphiteReporterConfiguration implements PluginConfigBean {
         return reportInterval;
     }
 
-    public InetSocketAddress getAddress() {
+    public HostAndPort getAddress() {
         return address;
     }
 
