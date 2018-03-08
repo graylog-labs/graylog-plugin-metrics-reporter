@@ -16,21 +16,24 @@
  */
 package org.graylog.plugins.metrics.prometheus.rest;
 
+import io.prometheus.client.Collector.MetricFamilySamples;
 import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.exporter.common.TextFormat;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
-import org.graylog2.plugin.rest.PluginRestResource;
-
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.Enumeration;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.graylog.plugins.metrics.prometheus.mapping.MappingConfigSyntaxException;
+import org.graylog.plugins.metrics.prometheus.mapping.MetricMapping;
+import org.graylog2.plugin.rest.PluginRestResource;
 
 import static java.util.Objects.requireNonNull;
 
@@ -38,10 +41,13 @@ import static java.util.Objects.requireNonNull;
 @RequiresAuthentication
 public class MetricsResource implements PluginRestResource {
     private final CollectorRegistry collectorRegistry;
+    private final MetricMapping metricsMapping;
 
     @Inject
-    public MetricsResource(CollectorRegistry collectorRegistry) {
+    public MetricsResource(final CollectorRegistry collectorRegistry)
+            throws MappingConfigSyntaxException {
         this.collectorRegistry = requireNonNull(collectorRegistry);
+        metricsMapping = new MetricMapping();
     }
 
     @GET
@@ -50,8 +56,16 @@ public class MetricsResource implements PluginRestResource {
     public Response prometheusMetrics() {
         final StreamingOutput stream = os -> {
             try (final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(os);
-                 final Writer writer = new BufferedWriter(outputStreamWriter)) {
-                TextFormat.write004(writer, collectorRegistry.metricFamilySamples());
+                    final Writer writer = new BufferedWriter(outputStreamWriter)) {
+                if (metricsMapping == null) {
+                    TextFormat.write004(writer, collectorRegistry.metricFamilySamples());
+                } else {
+                    final Enumeration<MetricFamilySamples> originalMetricFamilySamples
+                            = collectorRegistry.metricFamilySamples();
+                    final Enumeration<MetricFamilySamples> updatedMetricFamilySamples = metricsMapping
+                            .getUpdatedMetrics(originalMetricFamilySamples);
+                    TextFormat.write004(writer, updatedMetricFamilySamples);
+                }
                 writer.flush();
             }
         };
