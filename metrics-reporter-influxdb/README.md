@@ -9,7 +9,7 @@
 | `metrics_influxdb_unit_rates`        | `seconds`      | The time unit used for rates.                                                                 |
 | `metrics_influxdb_unit_durations`    | `milliseconds` | The time unit used for durations.                                                             |
 | `metrics_influxdb_uri`               | [empty]        | The URI to the InfluxDB server in the format `protocol://[user:password]@host:port/database`. |
-| `metrics_influxdb_time_precision`    | `seconds`      | The time precision used for InfluxDB.                                                         |
+| `metrics_influxdb_time_precision`    | `seconds`      | The time precision used for InfluxDB (only HTTP transport).                                   |
 | `metrics_influxdb_socket_timeout`    | `5s`           | The TCP/UDP socket timeout.                                                                   |
 | `metrics_influxdb_connect_timeout`   | `5s`           | The HTTP connect timeout.                                                                     |
 | `metrics_influxdb_read_timeout`      | `5s`           | The HTTP read timeout.                                                                        |
@@ -29,5 +29,5 @@ Example settings for `metrics_influxdb_uri`:
 * `tcp://influx.example.org:8089/graylog`
 * `udp://influx.example.org:8089/graylog`
 
-[InfluxDB-HTTP]: https://docs.influxdata.com/influxdb/v0.13/write_protocols/write_syntax/#http
-[InfluxDB-UDP]: https://docs.influxdata.com/influxdb/v0.13/write_protocols/udp/
+[InfluxDB-HTTP]: https://docs.influxdata.com/influxdb/v1.5/guides/writing_data/
+[InfluxDB-UDP]: https://docs.influxdata.com/influxdb/v1.5/supported_protocols/udp/

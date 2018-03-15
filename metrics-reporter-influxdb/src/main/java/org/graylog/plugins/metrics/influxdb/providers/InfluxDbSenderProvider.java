@@ -79,7 +79,6 @@ public class InfluxDbSenderProvider implements Provider<InfluxDbSender> {
                             port,
                             socketTimeout,
                             database,
-                            timePrecision,
                             "");
                 case "udp":
                     return new InfluxDbUdpSender(
@@ -87,7 +86,6 @@ public class InfluxDbSenderProvider implements Provider<InfluxDbSender> {
                             port,
                             socketTimeout,
                             database,
-                            timePrecision,
                             "");
                 default:
                     throw new IllegalArgumentException("Unsupported protocol \"" + protocol + "\"");
