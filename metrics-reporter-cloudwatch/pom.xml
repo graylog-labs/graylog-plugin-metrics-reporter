@@ -25,8 +25,8 @@
         </dependency>
 		<dependency>
 			<groupId>com.amazonaws</groupId>
-			<artifactId>aws-java-sdk</artifactId>
-			<version>1.11.228</version>
+			<artifactId>aws-java-sdk-cloudwatch</artifactId>
+			<version>1.11.295</version>
 		</dependency>
 		<dependency>
 		    <groupId>com.blacklocus</groupId>
