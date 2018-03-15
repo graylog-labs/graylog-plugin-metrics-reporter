@@ -11,3 +11,11 @@ out/
 *.iml
 *.iws
 *.ipr
+
+# Eclipse IDE
+.classpath
+.project
+.settings
+
+# OS X
+.DS_Store

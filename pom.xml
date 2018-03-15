@@ -23,6 +23,7 @@
         <module>metrics-reporter-opentsdb</module>
         <module>metrics-reporter-prometheus</module>
         <module>metrics-reporter-statsd</module>
+        <module>metrics-reporter-cloudwatch</module>
     </modules>
     
     <groupId>org.graylog.plugins</groupId>
