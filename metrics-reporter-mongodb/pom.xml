@@ -27,6 +27,17 @@
             <groupId>io.github.aparnachaudhary</groupId>
             <artifactId>mongodb-metrics</artifactId>
             <version>0.0.2</version>
+            <exclusions>
+                <!-- Included in Graylog -->
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.mongodb</groupId>
+                    <artifactId>mongo-java-driver</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

@@ -27,6 +27,17 @@
             <groupId>com.github.sps.metrics</groupId>
             <artifactId>metrics-opentsdb</artifactId>
             <version>1.1.0</version>
+            <exclusions>
+                <!-- Included in Graylog -->
+                <exclusion>
+                    <groupId>org.glassfish.jersey.core</groupId>
+                    <artifactId>jersey-client</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.glassfish.jersey.media</groupId>
+                    <artifactId>jersey-media-json-jackson</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

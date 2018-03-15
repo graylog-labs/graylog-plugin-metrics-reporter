@@ -27,6 +27,17 @@
             <groupId>com.izettle</groupId>
             <artifactId>metrics-influxdb</artifactId>
             <version>1.2.2</version>
+            <exclusions>
+                <!-- Included in Graylog -->
+                <exclusion>
+                    <groupId>commons-codec</groupId>
+                    <artifactId>commons-codec</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
