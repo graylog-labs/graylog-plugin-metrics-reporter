@@ -25,6 +25,6 @@ deploy:
     - "**/target/**/*.rpm"
   skip_cleanup: true
   on:
-    repo: Graylog2/graylog-plugin-metrics-reporter
+    repo: graylog-labs/graylog-plugin-metrics-reporter
     tags: true
     jdk: oraclejdk8
