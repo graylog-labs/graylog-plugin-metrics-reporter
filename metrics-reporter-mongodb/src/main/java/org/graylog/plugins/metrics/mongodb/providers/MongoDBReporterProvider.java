@@ -64,7 +64,7 @@ public class MongoDBReporterProvider implements Provider<MongoDBReporter> {
         final List<ServerAddress> serverAddresses = new ArrayList<>(hosts.size());
         for (String host : hosts) {
             final HostAndPort hostAndPort = HostAndPort.fromString(host).withDefaultPort(ServerAddress.defaultPort());
-            final ServerAddress serverAddress = new ServerAddress(hostAndPort.getHostText(), hostAndPort.getPort());
+            final ServerAddress serverAddress = new ServerAddress(hostAndPort.getHost(), hostAndPort.getPort());
             serverAddresses.add(serverAddress);
         }
         return serverAddresses.toArray(new ServerAddress[serverAddresses.size()]);

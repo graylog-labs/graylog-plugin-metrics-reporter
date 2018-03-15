@@ -49,14 +49,14 @@ public class TransportProvider implements Provider<Transport> {
                         .withConnectTimeout(Ints.saturatedCast(connectTimeout.toMilliseconds()))
                         .withSocketTimeout(Ints.saturatedCast(socketTimeout.toMilliseconds()));
                 if (proxy != null) {
-                    builder.withProxy(proxy.getHostText(), proxy.getPortOrDefault(8080));
+                    builder.withProxy(proxy.getHost(), proxy.getPortOrDefault(8080));
                 }
                 return builder.build();
             }
             case UDP: {
                 final HostAndPort udpAddress = configuration.getUdpAddress();
                 return new UdpTransport.Builder()
-                        .withStatsdHost(udpAddress.getHostText())
+                        .withStatsdHost(udpAddress.getHost())
                         .withPort(udpAddress.getPortOrDefault(8125))
                         .withPrefix(configuration.getUdpPrefix())
                         .build();

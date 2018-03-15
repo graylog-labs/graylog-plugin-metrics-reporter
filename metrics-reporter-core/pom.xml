@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.graylog.plugins</groupId>
         <artifactId>metrics-reporter-parent</artifactId>
-        <version>1.5.1-SNAPSHOT</version>
+        <version>2.4.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>metrics-reporter-core</artifactId>

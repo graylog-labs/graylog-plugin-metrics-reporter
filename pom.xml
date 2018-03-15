@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <prerequisites>
-        <maven>3.0.1</maven>
-    </prerequisites>
+
+    <parent>
+        <groupId>org.graylog.plugins</groupId>
+        <artifactId>graylog-plugin-parent</artifactId>
+        <version>2.4.0</version>
+    </parent>
 
     <modules>
         <module>metrics-reporter-core</module>
@@ -26,9 +29,8 @@
         <module>metrics-reporter-cloudwatch</module>
     </modules>
     
-    <groupId>org.graylog.plugins</groupId>
     <artifactId>metrics-reporter-parent</artifactId>
-    <version>1.5.1-SNAPSHOT</version>
+    <version>2.4.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Graylog Metrics Reporter Plugin (Parent POM)</name>
@@ -74,9 +76,8 @@
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <maven.deploy.skip>true</maven.deploy.skip>
         <maven.site.skip>true</maven.site.skip>
-        <tagNameFormat>@{project.version}</tagNameFormat>
-        <graylog.version>2.0.0</graylog.version>
-        <metrics.version>3.1.2</metrics.version>
+
+        <graylog.version>2.4.0</graylog.version>
         <graylog.plugin-dir>/usr/share/graylog-server/plugin</graylog.plugin-dir>
     </properties>
 
@@ -97,25 +98,31 @@
             <dependency>
                 <groupId>com.google.auto.service</groupId>
                 <artifactId>auto-service</artifactId>
-                <version>1.0-rc3</version>
+                <version>${auto-service.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.auto.value</groupId>
+                <artifactId>auto-value</artifactId>
+                <version>${auto-value.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>4.12</version>
+                <version>${junit.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
-                <version>1.10.19</version>
+                <version>${mockito.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>mockwebserver</artifactId>
-                <version>3.6.0</version>
+                <version>${okhttp.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
@@ -138,6 +145,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.google.auto.value</groupId>
+            <artifactId>auto-value</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -150,161 +162,32 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>2.5.3</version>
-                    <configuration>
-                        <autoVersionSubmodules>true</autoVersionSubmodules>
-                        <mavenExecutorId>forked-path</mavenExecutorId>
-                        <tagNameFormat>@{project.version}</tagNameFormat>
-                        <preparationGoals>clean test</preparationGoals>
-                        <goals>package</goals>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.5.1</version>
-                    <configuration>
-                        <annotationProcessors>
-                            <annotationProcessor>com.google.auto.service.processor.AutoServiceProcessor
-                            </annotationProcessor>
-                        </annotationProcessors>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.6</version>
-                    <configuration>
-                        <skipAssembly>true</skipAssembly>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-shade-plugin</artifactId>
-                    <version>2.4.3</version>
-                    <configuration>
-                        <minimizeJar>false</minimizeJar>
-                        <createDependencyReducedPom>false</createDependencyReducedPom>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>shade</goal>
-                            </goals>
-                            <configuration>
-                                <transformers>
-                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-                                </transformers>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>findbugs-maven-plugin</artifactId>
-                    <version>3.0.3</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-pmd-plugin</artifactId>
-                    <version>3.6</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>2.17</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>cobertura-maven-plugin</artifactId>
-                    <version>2.7</version>
-                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>2.9</version>
                 </plugin>
                 <plugin>
-                    <groupId>com.mycila</groupId>
-                    <artifactId>license-maven-plugin</artifactId>
-                    <version>2.11</version>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>rpm-maven-plugin</artifactId>
                     <configuration>
-                        <header>com/mycila/maven/plugin/license/templates/GPL-3.txt</header>
-                        <properties>
-                            <owner>${project.organization.name}</owner>
-                            <email>hello@graylog.com</email>
-                        </properties>
-                        <includes>
-                            <include>**/src/main/java/**</include>
-                            <include>**/src/test/java/**</include>
-                        </includes>
+                        <disabled>true</disabled>
                     </configuration>
-                    <executions>
-                        <execution>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
                 <plugin>
                     <artifactId>jdeb</artifactId>
                     <groupId>org.vafer</groupId>
-                    <version>1.5</version>
+                    <inherited>false</inherited>
                     <configuration>
-                        <deb>${project.build.directory}/${project.artifactId}-${project.version}.deb</deb>
-                        <dataSet>
-                            <data>
-                                <src>${project.build.directory}/${project.build.finalName}.jar</src>
-                                <type>file</type>
-                                <mapper>
-                                    <type>perm</type>
-                                    <prefix>${graylog.plugin-dir}</prefix>
-                                    <filemode>644</filemode>
-                                    <user>root</user>
-                                    <group>root</group>
-                                </mapper>
-                            </data>
-                        </dataSet>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>rpm-maven-plugin</artifactId>
-                    <version>2.1.5</version>
-                    <configuration>
-                        <disabled>true</disabled>
-                        <group>Application/Internet</group>
-                        <prefixes>
-                            <prefix>/usr</prefix>
-                        </prefixes>
-                        <defineStatements>
-                            <defineStatement>_unpackaged_files_terminate_build 0</defineStatement>
-                            <defineStatement>_binaries_in_noarch_packages_terminate_build 0</defineStatement>
-                        </defineStatements>
-                        <defaultFilemode>644</defaultFilemode>
-                        <defaultDirmode>755</defaultDirmode>
-                        <defaultUsername>root</defaultUsername>
-                        <defaultGroupname>root</defaultGroupname>
-                        <mappings>
-                            <mapping>
-                                <directory>${graylog.plugin-dir}</directory>
-                                <sources>
-                                    <source>
-                                        <location>${project.build.directory}/</location>
-                                        <includes>
-                                            <include>${project.build.finalName}.jar</include>
-                                        </includes>
-                                    </source>
-                                </sources>
-                            </mapping>
-                        </mappings>
+                        <skip>true</skip>
                     </configuration>
                 </plugin>
             </plugins>
@@ -312,11 +195,71 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessors>
+                        <annotationProcessor>com.google.auto.service.processor.AutoServiceProcessor
+                        </annotationProcessor>
+                        <annotationProcessor>com.google.auto.value.processor.AutoValueProcessor
+                        </annotationProcessor>
+                    </annotationProcessors>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Graylog-Plugin-Properties-Path>${project.groupId}.${project.artifactId}</Graylog-Plugin-Properties-Path>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
+                <configuration>
+                    <header>com/mycila/maven/plugin/license/templates/GPL-3.txt</header>
+                    <properties>
+                        <owner>${project.organization.name}</owner>
+                        <email>hello@graylog.com</email>
+                    </properties>
+                    <includes>
+                        <include>**/src/main/java/**</include>
+                        <include>**/src/test/java/**</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <configuration>
+                    <minimizeJar>false</minimizeJar>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -343,20 +286,23 @@
                                 <annotationProcessor>
                                     com.google.auto.service.processor.AutoServiceProcessor
                                 </annotationProcessor>
+                                <annotationProcessor>
+                                    com.google.auto.value.processor.AutoValueProcessor
+                                </annotationProcessor>
                             </annotationProcessors>
                         </configuration>
                         <dependencies>
                             <dependency>
                                 <groupId>org.codehaus.plexus</groupId>
                                 <artifactId>plexus-compiler-javac-errorprone</artifactId>
-                                <version>2.7</version>
+                                <version>2.8.3</version>
                             </dependency>
                             <!-- override plexus-compiler-javac-errorprone's dependency on
 +                                 Error Prone with the latest version -->
                             <dependency>
                                 <groupId>com.google.errorprone</groupId>
                                 <artifactId>error_prone_core</artifactId>
-                                <version>2.0.9</version>
+                                <version>2.2.0</version>
                             </dependency>
                         </dependencies>
                     </plugin>
@@ -383,22 +329,6 @@
                         <configuration>
                             <failOnViolation>false</failOnViolation>
                             <linkXRef>false</linkXRef>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-checkstyle-plugin</artifactId>
-                        <configuration>
-                            <failOnViolation>false</failOnViolation>
-                            <logViolationsToConsole>false</logViolationsToConsole>
-                            <configLocation>config/checkstyle.xml</configLocation>
                         </configuration>
                         <executions>
                             <execution>
@@ -445,15 +375,6 @@
                             <targetJdk>${maven.compiler.target}</targetJdk>
                             <failOnViolation>false</failOnViolation>
                             <verbose>true</verbose>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-checkstyle-plugin</artifactId>
-                        <configuration>
-                            <consoleOutput>true</consoleOutput>
-                            <failOnViolation>false</failOnViolation>
-                            <configLocation>config/checkstyle.xml</configLocation>
                         </configuration>
                     </plugin>
                     <plugin>

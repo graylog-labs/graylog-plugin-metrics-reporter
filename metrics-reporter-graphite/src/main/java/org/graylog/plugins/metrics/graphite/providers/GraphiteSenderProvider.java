@@ -40,7 +40,7 @@ public class GraphiteSenderProvider implements Provider<GraphiteSender> {
     @Override
     public GraphiteSender get() {
         HostAndPort hostAndPort = configuration.getAddress();
-        String host = hostAndPort.getHostText();
+        String host = hostAndPort.getHost();
         int port = hostAndPort.getPortOrDefault(2003);
 
         switch (configuration.getProtocol()) {

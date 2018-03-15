@@ -16,13 +16,13 @@
  */
 package org.graylog.plugins.metrics.ganglia.providers;
 
-import com.google.common.base.Throwables;
 import info.ganglia.gmetric4j.gmetric.GMetric;
 import org.graylog.plugins.metrics.ganglia.MetricsGangliaReporterConfiguration;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 
 import static java.util.Objects.requireNonNull;
 
@@ -46,7 +46,7 @@ public class GMetricProvider implements Provider<GMetric> {
                     configuration.getUUID(),
                     configuration.getSpoof());
         } catch (IOException e) {
-            throw Throwables.propagate(e);
+            throw new UncheckedIOException(e);
         }
     }
 }

@@ -17,7 +17,6 @@
 package org.graylog.plugins.metrics.elasticsearch.providers;
 
 import com.codahale.metrics.MetricRegistry;
-import com.google.common.base.Throwables;
 import com.google.common.primitives.Ints;
 import org.elasticsearch.metrics.ElasticsearchReporter;
 import org.graylog.plugins.metrics.core.RegexMetricFilter;
@@ -26,6 +25,7 @@ import org.graylog.plugins.metrics.elasticsearch.MetricsElasticsearchReporterCon
 import javax.inject.Inject;
 import javax.inject.Provider;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.List;
 
 import static java.util.Objects.requireNonNull;
@@ -59,7 +59,7 @@ public class ElasticsearchReporterProvider implements Provider<ElasticsearchRepo
                     .filter(new RegexMetricFilter(configuration.getIncludeMetrics()))
                     .build();
         } catch (IOException e) {
-            throw Throwables.propagate(e);
+            throw new UncheckedIOException(e);
         }
     }
 }

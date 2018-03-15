@@ -49,7 +49,7 @@ public class OpenTsdbProvider implements Provider<OpenTsdb> {
                         .create();
             case TELNET:
                 final HostAndPort address = configuration.getTelnetAddress();
-                final String host = address.getHostText();
+                final String host = address.getHost();
                 final int port = address.getPortOrDefault(MetricsOpenTsdbReporterConfiguration.DEFAULT_PORT);
 
                 return OpenTsdbTelnet.forService(host, port).create();

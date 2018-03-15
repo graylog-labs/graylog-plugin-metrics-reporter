@@ -20,6 +20,11 @@ import org.graylog.plugins.metrics.core.BasePluginMetaData;
 
 public class MetricsLibratoReporterMetaData extends BasePluginMetaData {
     @Override
+    protected String getPluginProperties() {
+        return "org.graylog.plugins.metrics-reporter-librato/graylog-plugin.properties";
+    }
+
+    @Override
     public String getName() {
         return "Internal Metrics Librato Reporter";
     }

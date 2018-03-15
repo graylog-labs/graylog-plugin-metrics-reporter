@@ -25,6 +25,8 @@ import java.util.Collections;
 import java.util.Set;
 
 public abstract class BasePluginMetaData implements PluginMetaData {
+    protected abstract String getPluginProperties();
+
     @Override
     public String getUniqueId() {
         return this.getClass().getCanonicalName();
@@ -47,11 +49,11 @@ public abstract class BasePluginMetaData implements PluginMetaData {
 
     @Override
     public Version getVersion() {
-        return new Version(1, 4, 0);
+        return Version.fromPluginProperties(getClass(), getPluginProperties(), "version", Version.from(2, 4, 0));
     }
 
     @Override
     public Version getRequiredVersion() {
-        return new Version(2, 0, 0);
+        return Version.fromPluginProperties(getClass(), getPluginProperties(), "graylog.version", Version.from(2, 4, 0));
     }
 }

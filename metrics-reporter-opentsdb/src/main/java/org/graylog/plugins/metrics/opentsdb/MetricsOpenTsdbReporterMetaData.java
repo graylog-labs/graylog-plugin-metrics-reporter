@@ -20,6 +20,11 @@ import org.graylog.plugins.metrics.core.BasePluginMetaData;
 
 public class MetricsOpenTsdbReporterMetaData extends BasePluginMetaData {
     @Override
+    protected String getPluginProperties() {
+        return "org.graylog.plugins.metrics-reporter-opentsdb/graylog-plugin.properties";
+    }
+
+    @Override
     public String getName() {
         return "Internal Metrics OpenTSDB Reporter";
     }

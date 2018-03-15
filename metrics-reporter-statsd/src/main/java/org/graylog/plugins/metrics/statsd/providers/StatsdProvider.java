@@ -36,6 +36,6 @@ public class StatsdProvider implements Provider<Statsd> {
     @Override
     public Statsd get() {
         final HostAndPort address = configuration.getAddress();
-        return new Statsd(address.getHostText(), address.getPortOrDefault(8125));
+        return new Statsd(address.getHost(), address.getPortOrDefault(8125));
     }
 }

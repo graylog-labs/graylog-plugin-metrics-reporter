@@ -20,6 +20,11 @@ import org.graylog.plugins.metrics.core.BasePluginMetaData;
 
 public class MetricsSlf4jReporterMetaData extends BasePluginMetaData {
     @Override
+    protected String getPluginProperties() {
+        return "org.graylog.plugins.metrics-reporter-slf4j/graylog-plugin.properties";
+    }
+
+    @Override
     public String getName() {
         return "Internal Metrics SLF4J Reporter";
     }

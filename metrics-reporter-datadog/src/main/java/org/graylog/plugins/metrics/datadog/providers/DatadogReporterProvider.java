@@ -17,7 +17,6 @@
 package org.graylog.plugins.metrics.datadog.providers;
 
 import com.codahale.metrics.MetricRegistry;
-import com.google.common.base.Throwables;
 import org.coursera.metrics.datadog.DatadogReporter;
 import org.coursera.metrics.datadog.transport.Transport;
 import org.graylog.plugins.metrics.core.RegexMetricFilter;
@@ -26,6 +25,7 @@ import org.graylog.plugins.metrics.datadog.MetricsDatadogReporterConfiguration;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 
 import static java.util.Objects.requireNonNull;
 
@@ -56,7 +56,7 @@ public class DatadogReporterProvider implements Provider<DatadogReporter> {
             try {
                 builder.withEC2Host();
             } catch (IOException e) {
-                throw Throwables.propagate(e);
+                throw new UncheckedIOException(e);
             }
         } else {
             builder.withHost(configuration.getHostname());

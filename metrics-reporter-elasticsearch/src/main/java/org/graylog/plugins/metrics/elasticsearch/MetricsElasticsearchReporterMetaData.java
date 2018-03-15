@@ -20,6 +20,11 @@ import org.graylog.plugins.metrics.core.BasePluginMetaData;
 
 public class MetricsElasticsearchReporterMetaData extends BasePluginMetaData {
     @Override
+    protected String getPluginProperties() {
+        return "org.graylog.plugins.metrics-reporter-elasticsearch/graylog-plugin.properties";
+    }
+
+    @Override
     public String getName() {
         return "Internal Metrics Elasticsearch Reporter";
     }

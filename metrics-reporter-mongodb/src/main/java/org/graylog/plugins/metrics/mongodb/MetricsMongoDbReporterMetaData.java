@@ -20,6 +20,11 @@ import org.graylog.plugins.metrics.core.BasePluginMetaData;
 
 public class MetricsMongoDbReporterMetaData extends BasePluginMetaData {
     @Override
+    protected String getPluginProperties() {
+        return "org.graylog.plugins.metrics-reporter-mongodb/graylog-plugin.properties";
+    }
+
+    @Override
     public String getName() {
         return "Internal Metrics MongoDB Reporter";
     }

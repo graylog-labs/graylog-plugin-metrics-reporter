@@ -17,7 +17,6 @@
 package org.graylog.plugins.metrics.cassandra.providers;
 
 import com.codahale.metrics.cassandra.Cassandra;
-import com.google.common.base.Throwables;
 import org.graylog.plugins.metrics.cassandra.MetricsCassandraReporterConfiguration;
 
 import javax.inject.Inject;
@@ -35,15 +34,11 @@ public class CassandraProvider implements Provider<Cassandra> {
 
     @Override
     public Cassandra get() {
-        try {
-            return new Cassandra(configuration.getAddresses(),
-                    configuration.getKeyspace(),
-                    configuration.getTable(),
-                    configuration.getTtl(),
-                    configuration.getPort(),
-                    configuration.getConsistency());
-        } catch (Exception e) {
-            throw Throwables.propagate(e);
-        }
+        return new Cassandra(configuration.getAddresses(),
+                configuration.getKeyspace(),
+                configuration.getTable(),
+                configuration.getTtl(),
+                configuration.getPort(),
+                configuration.getConsistency());
     }
 }
