@@ -30,7 +30,7 @@
     </modules>
     
     <artifactId>metrics-reporter-parent</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Graylog Metrics Reporter Plugin (Parent POM)</name>
@@ -64,7 +64,7 @@
         <developerConnection>scm:git:git@github.com:Graylog2/graylog-plugin-metrics-reporter.git</developerConnection>
         <connection>scm:git:git@github.com:Graylog2/graylog-plugin-metrics-reporter</connection>
         <url>https://github.com/Graylog2/graylog-plugin-metrics-reporter</url>
-        <tag>3.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
