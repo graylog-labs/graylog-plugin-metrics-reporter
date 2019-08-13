@@ -36,7 +36,7 @@ Specific settings for each metrics reporter plugin have been documented in the r
 
 ## Development
 
-This project is using Maven 3 and requires Java 8 or higher. The plugin will require Graylog 2.0.0 or higher.
+This project is using Maven 3 and requires Java 8 or higher. The plugin will require Graylog 3.0.0 or higher.
 
 * Clone this repository.
 * Run `mvn package` to build JAR files of all plugins.
