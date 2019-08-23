@@ -19,3 +19,5 @@ out/
 
 # OS X
 .DS_Store
+.factorypath
+.vscode/settings.json
