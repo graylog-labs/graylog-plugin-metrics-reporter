@@ -62,8 +62,8 @@ public class DropwizardSampleBuilder extends DefaultSampleBuilder {
         double value
     ) {
 
-        final List<String> labelNames = additionalLabelNames == null ? Collections.<String>emptyList() : additionalLabelNames;
-        final List<String> labelValues = additionalLabelValues == null ? Collections.<String>emptyList() : additionalLabelValues;
+        final List<String> labelNames = additionalLabelNames == null ? new ArrayList<>()  : new ArrayList<>(additionalLabelNames);
+        final List<String> labelValues = additionalLabelValues == null ? new ArrayList<>() : new ArrayList<>(additionalLabelValues);
 
         Matcher m = idPattern.matcher(dropwizardName);
 
@@ -77,7 +77,11 @@ public class DropwizardSampleBuilder extends DefaultSampleBuilder {
         }
 
         MatchResult result = m.toMatchResult();
-        String metricName = String.join(":", Arrays.asList(result.group(1), result.group(2)));
+        String metricName = String.join(":", Arrays.asList(
+            Collector.sanitizeMetricName(result.group(1)),
+            Collector.sanitizeMetricName(result.group(3)))
+        );
+
         String id = result.group(2);
         labelNames.add("id");
         labelValues.add(id);
@@ -86,15 +90,14 @@ public class DropwizardSampleBuilder extends DefaultSampleBuilder {
             try {
                 StreamRule rule = streamRuleService.load(id);
                 String ruleType =  rule.getType().toString();
-                labelNames.add("id");
-                labelValues.add(id);
                 labelNames.add("rule-type");
                 labelValues.add(ruleType);
+                String streamId = rule.getStreamId();
+                labelNames.add("stream-id");
+                labelValues.add(streamId);
 
                 try {
-                    Stream stream = streamService.load(rule.getStreamId());
-                    labelNames.add("stream-id");
-                    labelValues.add(stream.getId());
+                    Stream stream = streamService.load(streamId);
                     labelNames.add("stream-title");
                     labelValues.add(stream.getTitle());
                     labelNames.add("index-set-id");
@@ -113,8 +116,8 @@ public class DropwizardSampleBuilder extends DefaultSampleBuilder {
         if (dropwizardName.contains(".Stream.")) {
             try {
                 Stream s = streamService.load(id);
-                additionalLabelNames.add("stream-title");
-                additionalLabelValues.add(s.getTitle());
+                labelNames.add("stream-title");
+                labelValues.add(s.getTitle());
                 labelNames.add("index-set-id");
                 labelValues.add(s.getIndexSetId());
             } catch (NotFoundException e) {
@@ -123,7 +126,7 @@ public class DropwizardSampleBuilder extends DefaultSampleBuilder {
         }
 
        return new Collector.MetricFamilySamples.Sample(
-                Collector.sanitizeMetricName(metricName),
+                metricName,
                 new ArrayList<String>(labelNames),
                 new ArrayList<String>(labelValues),
                 value
