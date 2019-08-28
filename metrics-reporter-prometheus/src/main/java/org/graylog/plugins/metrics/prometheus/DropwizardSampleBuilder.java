@@ -29,6 +29,7 @@ import io.prometheus.client.dropwizard.samplebuilder.DefaultSampleBuilder;
 import javax.inject.Inject;
 
 import static java.util.Objects.requireNonNull;
+import static io.prometheus.client.Collector.sanitizeMetricName;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,7 +68,7 @@ public class DropwizardSampleBuilder extends DefaultSampleBuilder {
 
         if (!m.matches()) {
             return new Collector.MetricFamilySamples.Sample(
-                Collector.sanitizeMetricName(dropwizardName),
+                sanitizeMetricName(dropwizardName),
                 new ArrayList<String>(labelNames),
                 new ArrayList<String>(labelValues),
                 value
@@ -75,10 +76,10 @@ public class DropwizardSampleBuilder extends DefaultSampleBuilder {
         }
 
         MatchResult result = m.toMatchResult();
-        String metricName = String.join(":", Arrays.asList(
-            Collector.sanitizeMetricName(result.group(1)),
-            Collector.sanitizeMetricName(result.group(3)))
-        );
+        String metricName = sanitizeMetricName(String.join("_", Arrays.asList(
+            result.group(1),
+            result.group(3))
+        ));
 
         String id = result.group(2);
         labelNames.add("id");

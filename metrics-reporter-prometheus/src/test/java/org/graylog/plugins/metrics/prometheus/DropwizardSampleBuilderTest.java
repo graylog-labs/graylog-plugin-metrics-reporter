@@ -79,7 +79,7 @@ public class DropwizardSampleBuilderTest {
         Sample s = sampleBuilder.createSample("org.graylog2.plugin.streams.Stream.58934a5e92493a6b7f383fea.incomingMessages.1-sec-rate", "", null, null, 2.0);
 
         assertEquals(new Sample(
-           "org_graylog2_plugin_streams_Stream:incomingMessages_1_sec_rate",
+           "org_graylog2_plugin_streams_Stream_incomingMessages_1_sec_rate",
            Arrays.asList("id", "stream-title", "index-set-id"),
            Arrays.asList("58934a5e92493a6b7f383fea","foo", "42"),
            2.0
@@ -99,7 +99,7 @@ public class DropwizardSampleBuilderTest {
         Sample s = sampleBuilder.createSample("org.graylog2.plugin.streams.StreamRule.58934a5e92493a6b7f384059.executionTime", "", asList("quantile"), asList("0.5"), 1.0050000000000001E-6);
 
         assertEquals(new Sample(
-           "org_graylog2_plugin_streams_StreamRule:executionTime",
+           "org_graylog2_plugin_streams_StreamRule_executionTime",
            Arrays.asList("quantile", "id", "rule-type","stream-id", "stream-title", "index-set-id"),
            Arrays.asList("0.5","58934a5e92493a6b7f384059","PRESENCE", "x", "foo", "42"),
            1.0050000000000001E-6
@@ -132,7 +132,7 @@ public class DropwizardSampleBuilderTest {
         Sample s = sampleBuilder.createSample("org.graylog2.inputs.extractors.RegexExtractor.regex.203bfc45-0acd-4a82-b4fd-c3710fdce62d.conditionHits", "",emptyList(), emptyList(),  1906140.0);
 
         assertEquals(new Sample(
-           "org_graylog2_inputs_extractors_RegexExtractor_regex:conditionHits",
+           "org_graylog2_inputs_extractors_RegexExtractor_regex_conditionHits",
            asList("id"),
            asList("203bfc45-0acd-4a82-b4fd-c3710fdce62d"),
            1906140.0
