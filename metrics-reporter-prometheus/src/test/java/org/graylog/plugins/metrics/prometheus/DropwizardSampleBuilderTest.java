@@ -16,10 +16,7 @@
  */
 package org.graylog.plugins.metrics.prometheus;
 
-import com.google.common.primitives.Ints;
-import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.Collector.MetricFamilySamples.Sample;
-import io.prometheus.client.exporter.PushGateway;
 
 import org.graylog2.plugin.streams.Stream;
 import org.graylog2.plugin.streams.StreamRule;
@@ -34,18 +31,11 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import static java.util.Collections.emptyList;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 import static java.util.Arrays.*;
@@ -129,7 +119,7 @@ public class DropwizardSampleBuilderTest {
 
     @Test
     public void doTestNonStreamIDMetric() throws Exception {
-        Sample s = sampleBuilder.createSample("org.graylog2.inputs.extractors.RegexExtractor.regex.203bfc45-0acd-4a82-b4fd-c3710fdce62d.conditionHits", "",emptyList(), emptyList(),  1906140.0);
+        Sample s = sampleBuilder.createSample("org.graylog2.inputs.extractors.RegexExtractor.regex.203bfc45-0acd-4a82-b4fd-c3710fdce62d.conditionHits", "",emptyList(), emptyList(), 1906140.0);
 
         assertEquals(new Sample(
            "org_graylog2_inputs_extractors_RegexExtractor_regex_conditionHits",
@@ -137,5 +127,17 @@ public class DropwizardSampleBuilderTest {
            asList("203bfc45-0acd-4a82-b4fd-c3710fdce62d"),
            1906140.0
         ),s);
+    }
+
+    @Test
+    public void doTestPipelineRuleWithStage() throws Exception {
+        Sample s = sampleBuilder.createSample("org.graylog.plugins.pipelineprocessor.ast.Rule.5c1f6c332d44a501320636ae.5c1f6c492d44a501320636c7.0.not-matched", "",emptyList(), emptyList(), 0.0);
+
+        assertEquals(new Sample(
+            "org_graylog_plugins_pipelineprocessor_ast_Rule_not_matched",
+            asList("id", "pipeline-id", "stage"),
+            asList("5c1f6c332d44a501320636ae", "5c1f6c492d44a501320636c7", "0"),
+            0.0
+         ),s);
     }
 }

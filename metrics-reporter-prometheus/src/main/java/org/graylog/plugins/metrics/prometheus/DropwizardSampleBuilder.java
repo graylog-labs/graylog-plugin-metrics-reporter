@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
 
 public class DropwizardSampleBuilder extends DefaultSampleBuilder {
 
-    private static final String ID_METRIC_PATTERN = "(.*?)\\.([0-9a-f-]{8,})\\.(.*)";
+    private static final String ID_METRIC_PATTERN = "(.*?)\\.([0-9a-f-]{8,})\\.(?:([0-9a-f-]{8,})\\.(\\d+)\\.)?+(.*?)";
     private final StreamService streamService;
     private final StreamRuleService streamRuleService;
     private final Pattern idPattern;
@@ -78,12 +78,19 @@ public class DropwizardSampleBuilder extends DefaultSampleBuilder {
         MatchResult result = m.toMatchResult();
         String metricName = sanitizeMetricName(String.join("_", Arrays.asList(
             result.group(1),
-            result.group(3))
+            result.group(5))
         ));
 
         String id = result.group(2);
         labelNames.add("id");
         labelValues.add(id);
+
+        if (dropwizardName.contains(".ast.Rule.")) {
+            labelNames.add("pipeline-id");
+            labelValues.add(result.group(3));
+            labelNames.add("stage");
+            labelValues.add(result.group(4));
+        }
 
         if (dropwizardName.contains(".StreamRule.")) {
             try {
@@ -124,7 +131,7 @@ public class DropwizardSampleBuilder extends DefaultSampleBuilder {
             }
         }
 
-       return new Collector.MetricFamilySamples.Sample(
+        return new Collector.MetricFamilySamples.Sample(
                 metricName,
                 new ArrayList<String>(labelNames),
                 new ArrayList<String>(labelValues),
