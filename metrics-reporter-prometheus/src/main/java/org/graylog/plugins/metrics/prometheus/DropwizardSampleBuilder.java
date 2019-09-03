@@ -86,10 +86,15 @@ public class DropwizardSampleBuilder extends DefaultSampleBuilder {
         labelValues.add(id);
 
         if (dropwizardName.contains(".ast.Rule.")) {
-            labelNames.add("pipeline-id");
-            labelValues.add(result.group(3));
-            labelNames.add("stage");
-            labelValues.add(result.group(4));
+            if (result.group(3) != null) {
+                labelNames.add("pipeline-id");
+                labelValues.add(result.group(3));
+            }
+
+            if (result.group(4) != null) {
+                labelNames.add("stage");
+                labelValues.add(result.group(4));
+            }
         }
 
         if (dropwizardName.contains(".StreamRule.")) {

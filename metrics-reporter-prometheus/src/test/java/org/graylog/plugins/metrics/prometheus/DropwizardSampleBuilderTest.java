@@ -140,4 +140,16 @@ public class DropwizardSampleBuilderTest {
             0.0
          ),s);
     }
+
+    @Test
+    public void doTestPipelineRuleWithoutStage() throws Exception {
+        Sample s = sampleBuilder.createSample("org.graylog.plugins.pipelineprocessor.ast.Rule.5c1f6c332d44a501320636ae.executed", "",emptyList(), emptyList(), 0.0);
+
+        assertEquals(new Sample(
+            "org_graylog_plugins_pipelineprocessor_ast_Rule_executed",
+            asList("id"),
+            asList("5c1f6c332d44a501320636ae"),
+            0.0
+         ),s);
+    }
 }
