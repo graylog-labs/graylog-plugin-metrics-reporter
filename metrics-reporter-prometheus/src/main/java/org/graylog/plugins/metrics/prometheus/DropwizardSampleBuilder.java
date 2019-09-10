@@ -87,7 +87,7 @@ public class DropwizardSampleBuilder extends DefaultSampleBuilder {
 
         if (dropwizardName.contains(".ast.Rule.")) {
             if (result.group(3) != null) {
-                labelNames.add("pipeline-id");
+                labelNames.add("pipeline_id");
                 labelValues.add(result.group(3));
             }
 
@@ -101,24 +101,24 @@ public class DropwizardSampleBuilder extends DefaultSampleBuilder {
             try {
                 StreamRule rule = streamRuleService.load(id);
                 String ruleType =  rule.getType().toString();
-                labelNames.add("rule-type");
+                labelNames.add("rule_type");
                 labelValues.add(ruleType);
                 String streamId = rule.getStreamId();
-                labelNames.add("stream-id");
+                labelNames.add("stream_id");
                 labelValues.add(streamId);
 
                 try {
                     Stream stream = streamService.load(streamId);
-                    labelNames.add("stream-title");
+                    labelNames.add("stream_title");
                     labelValues.add(stream.getTitle());
-                    labelNames.add("index-set-id");
+                    labelNames.add("index_set_id");
                     labelValues.add(stream.getIndexSetId());
                 } catch (NotFoundException nfe) {
                     // we'll have to live with less information I guess
                 }
 
             } catch (NotFoundException nfe) {
-                labelNames.add("rule-type");
+                labelNames.add("rule_type");
                 labelValues.add("unknown");
             }
 
@@ -127,9 +127,9 @@ public class DropwizardSampleBuilder extends DefaultSampleBuilder {
         if (dropwizardName.contains(".Stream.")) {
             try {
                 Stream s = streamService.load(id);
-                labelNames.add("stream-title");
+                labelNames.add("stream_title");
                 labelValues.add(s.getTitle());
-                labelNames.add("index-set-id");
+                labelNames.add("index_set_id");
                 labelValues.add(s.getIndexSetId());
             } catch (NotFoundException e) {
                 // we'll have to live with less information I guess
