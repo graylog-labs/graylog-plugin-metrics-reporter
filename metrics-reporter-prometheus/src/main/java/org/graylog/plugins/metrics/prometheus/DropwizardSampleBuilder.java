@@ -41,15 +41,18 @@ import java.util.regex.Pattern;
 public class DropwizardSampleBuilder extends DefaultSampleBuilder {
 
     private static final String ID_METRIC_PATTERN = "(.*?)\\.([0-9a-f-]{8,})\\.(?:([0-9a-f-]{8,})\\.(\\d+)\\.)?+(.*?)";
+    private static final String NESTED_STREAM_RULE = "(.*?_Stream_StreamRule_)([0-9a-f-]{8,})_(.+)";
     private final StreamService streamService;
     private final StreamRuleService streamRuleService;
     private final Pattern idPattern;
+    private final Pattern nestedRulePattern;
 
     @Inject
     public DropwizardSampleBuilder(StreamService streamService,StreamRuleService streamRuleService) {
         this.streamService = requireNonNull(streamService);
         this.streamRuleService = requireNonNull(streamRuleService);
         this.idPattern =         Pattern.compile(ID_METRIC_PATTERN);
+        this.nestedRulePattern = Pattern.compile(NESTED_STREAM_RULE);
     }
 
     @Override
@@ -95,9 +98,34 @@ public class DropwizardSampleBuilder extends DefaultSampleBuilder {
                 labelNames.add("stage");
                 labelValues.add(result.group(4));
             }
-        }
+        } else if (dropwizardName.contains(".Stream.")) {
+            try {
+                Stream s = streamService.load(id);
+                labelNames.add("stream_title");
+                labelValues.add(s.getTitle());
+            } catch (NotFoundException e) {
+                // we'll have to live with less information I guess
+            }
 
-        if (dropwizardName.contains(".StreamRule.")) {
+            Matcher nrm = nestedRulePattern.matcher(metricName);
+            if (nrm.matches()) {
+                metricName = nrm.group(1)+nrm.group(3);
+                String streamRuleId = nrm.group(2);
+                labelNames.add("stream_rule_id");
+                labelValues.add(streamRuleId);
+
+                try {
+                    StreamRule rule = streamRuleService.load(streamRuleId);
+                    String ruleType =  rule.getType().toString();
+                    labelNames.add("rule_type");
+                    labelValues.add(ruleType);
+                } catch (NotFoundException nfe) {
+                    labelNames.add("rule_type");
+                    labelValues.add("unknown");
+                }
+
+            }
+        } else if (dropwizardName.contains(".StreamRule.")) {
             try {
                 StreamRule rule = streamRuleService.load(id);
                 String ruleType =  rule.getType().toString();
@@ -122,18 +150,6 @@ public class DropwizardSampleBuilder extends DefaultSampleBuilder {
                 labelValues.add("unknown");
             }
 
-        }
-
-        if (dropwizardName.contains(".Stream.")) {
-            try {
-                Stream s = streamService.load(id);
-                labelNames.add("stream_title");
-                labelValues.add(s.getTitle());
-                labelNames.add("index_set_id");
-                labelValues.add(s.getIndexSetId());
-            } catch (NotFoundException e) {
-                // we'll have to live with less information I guess
-            }
         }
 
         return new Collector.MetricFamilySamples.Sample(

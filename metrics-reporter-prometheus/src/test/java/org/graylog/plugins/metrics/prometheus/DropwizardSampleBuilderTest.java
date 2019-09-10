@@ -27,6 +27,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Answers;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -75,6 +76,26 @@ public class DropwizardSampleBuilderTest {
            2.0
         ),s);
     }
+
+    //
+    @Test
+    public void doTestStreamStreamRule() throws Exception {
+        when(streamRuleService.load(Matchers.eq("5d35b414bf1062c54c8c8680"))).thenReturn(streamRule);
+        when(streamRule.getType()).thenReturn(StreamRuleType.PRESENCE);
+
+        when(streamService.load(Matchers.eq("5d356589bf1062c54c8c37ee"))).thenReturn(stream);
+        when(stream.getTitle()).thenReturn("foo");
+
+        Sample s = sampleBuilder.createSample("org.graylog2.plugin.streams.Stream.5d356589bf1062c54c8c37ee.StreamRule.5d35b414bf1062c54c8c8680.executionTime", "", asList("quantile"), asList("0.5"), 1.0050000000000001E-6);
+
+        assertEquals(new Sample(
+           "org_graylog2_plugin_streams_Stream_StreamRule_executionTime",
+           Arrays.asList("quantile", "id", "stream_title", "stream_rule_id", "rule_type"),
+           Arrays.asList("0.5", "5d356589bf1062c54c8c37ee","foo","5d35b414bf1062c54c8c8680","PRESENCE"),
+           1.0050000000000001E-6
+        ),s);
+    }
+
 
     @Test
     public void doTestStreamRule() throws Exception {
