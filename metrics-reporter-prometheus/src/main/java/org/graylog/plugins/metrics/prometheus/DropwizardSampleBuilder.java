@@ -103,6 +103,8 @@ public class DropwizardSampleBuilder extends DefaultSampleBuilder {
                 Stream s = streamService.load(id);
                 labelNames.add("stream_title");
                 labelValues.add(s.getTitle());
+                labelNames.add("index_set_id");
+                labelValues.add(s.getIndexSetId());
             } catch (NotFoundException e) {
                 // we'll have to live with less information I guess
             }

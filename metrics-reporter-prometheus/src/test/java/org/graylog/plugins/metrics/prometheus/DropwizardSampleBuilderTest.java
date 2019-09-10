@@ -27,7 +27,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Answers;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -36,7 +35,8 @@ import java.util.Arrays;
 import static java.util.Collections.emptyList;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import static java.util.Arrays.*;
@@ -80,18 +80,19 @@ public class DropwizardSampleBuilderTest {
     //
     @Test
     public void doTestStreamStreamRule() throws Exception {
-        when(streamRuleService.load(Matchers.eq("5d35b414bf1062c54c8c8680"))).thenReturn(streamRule);
+        when(streamRuleService.load(eq("5d35b414bf1062c54c8c8680"))).thenReturn(streamRule);
         when(streamRule.getType()).thenReturn(StreamRuleType.PRESENCE);
 
-        when(streamService.load(Matchers.eq("5d356589bf1062c54c8c37ee"))).thenReturn(stream);
+        when(streamService.load(eq("5d356589bf1062c54c8c37ee"))).thenReturn(stream);
         when(stream.getTitle()).thenReturn("foo");
+        when(stream.getIndexSetId()).thenReturn("42");
 
         Sample s = sampleBuilder.createSample("org.graylog2.plugin.streams.Stream.5d356589bf1062c54c8c37ee.StreamRule.5d35b414bf1062c54c8c8680.executionTime", "", asList("quantile"), asList("0.5"), 1.0050000000000001E-6);
 
         assertEquals(new Sample(
            "org_graylog2_plugin_streams_Stream_StreamRule_executionTime",
-           Arrays.asList("quantile", "id", "stream_title", "stream_rule_id", "rule_type"),
-           Arrays.asList("0.5", "5d356589bf1062c54c8c37ee","foo","5d35b414bf1062c54c8c8680","PRESENCE"),
+           Arrays.asList("quantile", "id", "stream_title", "index_set_id","stream_rule_id", "rule_type"),
+           Arrays.asList("0.5", "5d356589bf1062c54c8c37ee","foo", "42", "5d35b414bf1062c54c8c8680","PRESENCE"),
            1.0050000000000001E-6
         ),s);
     }
