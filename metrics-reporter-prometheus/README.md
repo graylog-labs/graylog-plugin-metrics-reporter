@@ -14,7 +14,7 @@ For streams and stream rules additional information is provided as labels:
 * `stream-title`: title of stream (stream and stream rule)
 * `rule-type`: Type of stream rule, e.g. `regexp`
 * `stream-id`: related stream id for stream rule
-* `index-set-id`: ID ofrelated index set for stream and stream rule
+* `index-set-id`: ID of related index set for stream and stream rule
 
 ## Pulling metrics
 
