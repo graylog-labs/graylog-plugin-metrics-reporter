@@ -1,5 +1,7 @@
 # Graylog Metrics Reporter plugins
 
+## ATTENTION: This repository is no longer maintained and has been archived. Please check the [metrics documentation](https://docs.graylog.org/docs/metrics) for available metric exporters. Graylog server has a built-in Prometheus exporter.
+
 [![Github Downloads](https://img.shields.io/github/downloads/graylog-labs/graylog-plugin-metrics-reporter/total.svg)](https://github.com/graylog-labs/graylog-plugin-metrics-reporter/releases)
 [![GitHub Release](https://img.shields.io/github/release/graylog-labs/graylog-plugin-metrics-reporter.svg)](https://github.com/graylog-labs/graylog-plugin-metrics-reporter/releases)
 [![Build Status](https://travis-ci.org/graylog-labs/graylog-plugin-metrics-reporter.svg?branch=master)](https://travis-ci.org/graylog-labs/graylog-plugin-metrics-reporter)
